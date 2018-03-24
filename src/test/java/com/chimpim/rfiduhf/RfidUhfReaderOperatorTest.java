@@ -1,23 +1,25 @@
 package com.chimpim.rfiduhf;
 
-import com.chimpim.rfiduhf.util.TimeUtil;
+import com.chimpim.rfiduhf.data.Result;
+import com.chimpim.rfiduhf.data.UhfTag;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class RfidUhfReaderOperatorTest {
     private static final Logger logger = Logger.getLogger("RfidUhfReaderOperatorTest");
 
-    private static final String port = "COM4";
+    private static final String port = "COM3";
     private static final byte[] UID = new byte[]{-32, 4, 0, 0, -64, -13, 100, 6};
     private RfidUhfReaderOperator mOperator;
 
     @Before
     public void setup() throws Exception {
         DefaultRfidUhfReaderConnAdapter adapter = new DefaultRfidUhfReaderConnAdapter(port);
-        mOperator = RfidUhfReaderOperator.of(adapter, RfidUhfProtocol.ADDRESS_COMMUNAL);
+        mOperator = RfidUhfReaderOperator.of(adapter, RfidUhfConstant.ADDRESS_COMMUNAL);
         mOperator.connect();
     }
 
@@ -47,7 +49,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void setBaudRate() throws Exception {
-        logger.info(mOperator.setBaudRate(RfidUhfProtocol.BAUD_RATE_9600).toString());
+        logger.info(mOperator.setBaudRate(RfidUhfConstant.BAUD_RATE_9600).toString());
     }
 
     @Test
@@ -82,8 +84,17 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void isoMultiTagIdentify() throws Exception {
+        // 清空缓存区
         clearIDBuffer();
+        // 多标签识别
         logger.info(mOperator.isoMultiTagIdentify().toString());
+        // 查询缓存区标签数量
+        Result<Byte> result = mOperator.queryIDCount();
+        logger.info(result.toString());
+        // 从缓存区中取出标签
+        Result<UhfTag[]> result1 = mOperator.getIDAndDelete(result.getPayload());
+        logger.info(result1.toString());
+        logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
@@ -98,7 +109,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void isoReadWithUID() throws Exception {
-        logger.info(mOperator.isoReadWithUID(UID, (byte) 8).toString());
+        logger.info(mOperator.isoReadWithUID(UID, (byte) 0).toString());
     }
 
     @Test
@@ -129,8 +140,17 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void gen2MultiTagIdentify() throws Exception {
+        // 清空缓存区
         clearIDBuffer();
+        // 多标签识别
         logger.info(mOperator.gen2MultiTagIdentify().toString());
+        // 查询缓存区标签数量
+        Result<Byte> result = mOperator.queryIDCount();
+        logger.info(result.toString());
+        // 从缓存区中取出标签
+        Result<UhfTag[]> result1 = mOperator.getIDAndDelete(result.getPayload());
+        logger.info(result1.toString());
+        logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
@@ -141,7 +161,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void gen2Lock() throws Exception {
-        logger.info(mOperator.gen2Lock(RfidUhfProtocol.MEM_BANK_EPC, RfidUhfProtocol.CONTROL_NOT_LOCK).toString());
+        logger.info(mOperator.gen2Lock(RfidUhfConstant.MEM_BANK_EPC, RfidUhfConstant.CONTROL_NOT_LOCK).toString());
     }
 
     @Test
@@ -157,13 +177,13 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void gen2Read() throws Exception {
-        logger.info(mOperator.gen2Read(RfidUhfProtocol.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
+        logger.info(mOperator.gen2Read(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
     }
 
     @Test
     public void gen2Write() throws Exception {
-        byte[] value = new byte[2];
-        logger.info(mOperator.gen2Write(RfidUhfProtocol.MEM_BANK_EPC, (byte) 2, value).toString());
+        byte[] value = new byte[]{0x01, 0x01};
+        logger.info(mOperator.gen2Write(RfidUhfConstant.MEM_BANK_EPC, (byte) 4, value).toString());
     }
 
     @Test

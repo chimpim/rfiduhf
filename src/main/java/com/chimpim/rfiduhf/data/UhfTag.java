@@ -38,13 +38,25 @@ public class UhfTag {
         return data;
     }
 
+    public String getTypeName() {
+        switch (type) {
+            case TYPE_GEN2_6C:
+                return "TYPE_GEN2_6C";
+            case TYPE_ISO_6B:
+                return "TYPE_ISO_6B";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
     @Override
     public String toString() {
         return "UhfTag{" +
                 "type=" + (0xFF & type) +
+                ", typeName=" + getTypeName() +
                 ", ant=" + (0xFF & ant) +
                 ", data=" + Arrays.toString(data) +
-                ", hex=" + HexStringUtil.bytesToHexString(data) +
+                ", hexData=" + HexStringUtil.bytesToHexString(data) +
                 '}';
     }
 }

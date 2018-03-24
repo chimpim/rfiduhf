@@ -13,7 +13,7 @@ public class DefaultRfidUhfReaderConnAdapter implements RfidUhfReaderConnAdapter
     private SerialPort serialPort;
 
 
-    DefaultRfidUhfReaderConnAdapter(@NotNull String port) {
+    public DefaultRfidUhfReaderConnAdapter(@NotNull String port) {
         this.port = port;
     }
 

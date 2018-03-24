@@ -1,6 +1,6 @@
 package com.chimpim.rfiduhf.data;
 
-import com.chimpim.rfiduhf.RfidUhfProtocol;
+import com.chimpim.rfiduhf.RfidUhfConstant;
 
 public class Result<T> {
     private byte sc;
@@ -30,32 +30,32 @@ public class Result<T> {
     }
 
     public boolean isOk() {
-        return sc == RfidUhfProtocol.SC_ERR_NONE;
+        return sc == RfidUhfConstant.SC_ERR_NONE;
     }
 
     public String getScName() {
         switch (sc) {
-            case RfidUhfProtocol.SC_ERR_NONE:
+            case RfidUhfConstant.SC_ERR_NONE:
                 return "SC_ERR_NONE";
-            case RfidUhfProtocol.SC_ERR_GENERAL_ERR:
+            case RfidUhfConstant.SC_ERR_GENERAL_ERR:
                 return "SC_ERR_GENERAL_ERR";
-            case RfidUhfProtocol.SC_ERR_PAR_SET_FAILED:
+            case RfidUhfConstant.SC_ERR_PAR_SET_FAILED:
                 return "SC_ERR_PAR_SET_FAILED";
-            case RfidUhfProtocol.SC_ERR_PAR_GET_FAILED:
+            case RfidUhfConstant.SC_ERR_PAR_GET_FAILED:
                 return "SC_ERR_PAR_GET_FAILED";
-            case RfidUhfProtocol.SC_ERR_NO_TAG:
+            case RfidUhfConstant.SC_ERR_NO_TAG:
                 return "SC_ERR_NO_TAG";
-            case RfidUhfProtocol.SC_ERR_READ_FAILED:
+            case RfidUhfConstant.SC_ERR_READ_FAILED:
                 return "SC_ERR_READ_FAILED";
-            case RfidUhfProtocol.SC_ERR_WRITE_FAILED:
+            case RfidUhfConstant.SC_ERR_WRITE_FAILED:
                 return "SC_ERR_WRITE_FAILED";
-            case RfidUhfProtocol.SC_ERR_LOCK_FAILED:
+            case RfidUhfConstant.SC_ERR_LOCK_FAILED:
                 return "SC_ERR_LOCK_FAILED";
-            case RfidUhfProtocol.SC_ERR_ERASE_FAILED:
+            case RfidUhfConstant.SC_ERR_ERASE_FAILED:
                 return "SC_ERR_ERASE_FAILED";
-            case RfidUhfProtocol.SC_ERR_CMD_ERR:
+            case RfidUhfConstant.SC_ERR_CMD_ERR:
                 return "SC_ERR_CMD_ERR";
-            case RfidUhfProtocol.SC_ERR_UNDEFINED:
+            case RfidUhfConstant.SC_ERR_UNDEFINED:
                 return "SC_ERR_UNDEFINED";
             default:
                 return "UNKNOWN";

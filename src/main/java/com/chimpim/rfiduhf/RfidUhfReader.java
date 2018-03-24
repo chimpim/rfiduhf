@@ -35,7 +35,8 @@ class RfidUhfReader {
         writeAndFlush(cmd);
     }
 
-    @Nullable byte[] readResponse() throws IOException {
+    @Nullable
+    byte[] readResponse() throws IOException {
         return readResponse(10, 50);
     }
 
@@ -45,7 +46,8 @@ class RfidUhfReader {
         mOutputStream.flush();
     }
 
-    private synchronized @Nullable byte[] readResponse(final int interval, final int count) throws IOException {
+    @Nullable
+    private synchronized byte[] readResponse(final int interval, final int count) throws IOException {
         if (mInputStream == null) throw new IOException("mInputStream == null");
         int counter = 0;
         int available = mInputStream.available();

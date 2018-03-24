@@ -7,14 +7,19 @@ import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.*;
 import org.jetbrains.annotations.NotNull;
 
+import static com.chimpim.rfiduhf.RfidUhfConstant.REQ_HEAD;
+import static com.chimpim.rfiduhf.RfidUhfConstant.RESP_HEAD;
+
 class DefaultRfidUhfProtocol implements RfidUhfProtocol {
     static final DefaultRfidUhfProtocol INSTANCE = new DefaultRfidUhfProtocol();
 
     private DefaultRfidUhfProtocol() {
     }
 
+
+    @NotNull
     @Override
-    public @NotNull byte[] setBaudRate(byte address, byte baudRate) {
+    public byte[] setBaudRate(byte address, byte baudRate) {
         // 0x0A address 0x03 0x20 baudRate cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -28,14 +33,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> setBaudRate(byte[] resp) throws RespException {
+    public Result<Void> setBaudRate(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] resetReader(byte address) {
+    public byte[] resetReader(byte address) {
         // 0x0A address 0x02 0x21 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -48,14 +54,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> resetReader(byte[] resp) throws RespException {
+    public Result<Void> resetReader(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getFirmwareVersion(byte address) {
+    public byte[] getFirmwareVersion(byte address) {
         // 0x0A address 0x02 0x22 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -68,15 +75,16 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Version> getFirmwareVersion(byte[] resp) throws RespException {
+    public Result<Version> getFirmwareVersion(byte[] resp) throws RespException {
         checkBasicResp(resp);
         return Result.of(resp, new Version(resp[4], resp[5]));
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] setRF(byte address, byte power, byte freq) {
+    public byte[] setRF(byte address, byte power, byte freq) {
         // 0x0A address 0x04 0x25 power freq cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -91,14 +99,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> setRF(byte[] resp) throws RespException {
+    public Result<Void> setRF(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getRF(byte address) {
+    public byte[] getRF(byte address) {
         // 0x0A address 0x02 0x26 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -111,16 +120,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<PowerAndFreq> getRF(byte[] resp) throws RespException {
+    public Result<PowerAndFreq> getRF(byte[] resp) throws RespException {
         // 0x0B address 0x04 0x00 power freq cc
         checkBasicResp(resp);
         return Result.of(resp, new PowerAndFreq(resp[4], resp[5]));
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] setWorkAntenna(byte address, byte antCfg) {
+    public byte[] setWorkAntenna(byte address, byte antCfg) {
         // 0x0A address 0x03 0x27 antCfg cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -134,14 +144,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> setWorkAntenna(byte[] resp) throws RespException {
+    public Result<Void> setWorkAntenna(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getWorkAntenna(byte address) {
+    public byte[] getWorkAntenna(byte address) {
         // 0x0A address 0x02 0x28 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -154,16 +165,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Byte> getWorkAntenna(byte[] resp) throws RespException {
+    public Result<Byte> getWorkAntenna(byte[] resp) throws RespException {
         // 0x0A address 0x03 0x00 antenna cc
         checkBasicResp(resp);
         return Result.of(resp, resp[4]);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoMultiTagIdentify(byte address) {
+    public byte[] isoMultiTagIdentify(byte address) {
         // 0x0A address 0x02 0x60 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -176,16 +188,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Byte> isoMultiTagIdentify(byte[] resp) throws RespException {
+    public Result<Byte> isoMultiTagIdentify(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 tagCount cc
         checkBasicResp(resp);
         return Result.of(resp, resp[4]);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoMultiTagRead(byte address, byte startAddr) {
+    public byte[] isoMultiTagRead(byte address, byte startAddr) {
         // 0x0A address 0x03 0x61 startAddr cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -199,16 +212,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Byte> isoMultiTagRead(byte[] resp) throws RespException {
+    public Result<Byte> isoMultiTagRead(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 TagCount cc
         checkBasicResp(resp);
         return Result.of(resp, resp[4]);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoWrite(byte address, byte addr, byte value) {
+    public byte[] isoWrite(byte address, byte addr, byte value) {
         // 0x0A address 0x04 0x62 addr value cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -223,14 +237,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> isoWrite(byte[] resp) throws RespException {
+    public Result<Void> isoWrite(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoReadWithUID(byte address, byte[] uid, byte addr) {
+    public byte[] isoReadWithUID(byte address, byte[] uid, byte addr) {
         // 0x0A address 0x0B 0x63 UID(8byte) addr cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -246,9 +261,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<UhfTag> isoReadWithUID(byte[] resp) throws RespException {
+    public Result<UhfTag> isoReadWithUID(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[8];
@@ -256,8 +271,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return Result.of(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], bytes));
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoWriteWithUID(byte address, byte[] uid, byte addr, byte value) {
+    public byte[] isoWriteWithUID(byte address, byte[] uid, byte addr, byte value) {
         // 0x0A address 0x0B 0x64 UID(8byte) addr value cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -274,14 +290,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> isoWriteWithUID(byte[] resp) throws RespException {
+    public Result<Void> isoWriteWithUID(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoLock(byte address, byte addr) {
+    public byte[] isoLock(byte address, byte addr) {
         // 0x0A address 0x03 0x65 addr cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -295,14 +312,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> isoLock(byte[] resp) throws RespException {
+    public Result<Void> isoLock(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoQueryLock(byte address, byte addr) {
+    public byte[] isoQueryLock(byte address, byte addr) {
         // 0x0A address 0x03 0x66 addr cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -316,9 +334,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Boolean> isoQueryLock(byte[] resp) throws RespException {
+    public Result<Boolean> isoQueryLock(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 lockStatus cc
         checkBasicResp(resp);
         byte lockStatus = resp[4];
@@ -330,8 +348,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return Result.of(resp, null);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoBlockWrite(byte address, byte addr, byte[] value) {
+    public byte[] isoBlockWrite(byte address, byte addr, byte[] value) {
         // 0x0A address 0x07 0x67 addr value(4byte) cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -346,14 +365,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> isoBlockWrite(byte[] resp) throws RespException {
+    public Result<Void> isoBlockWrite(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] isoSingleTagRead(byte address, byte addr) {
+    public byte[] isoSingleTagRead(byte address, byte addr) {
         // 0x0A address 0x03 0x68 addr cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -367,9 +387,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<UhfTag> isoSingleTagRead(byte[] resp) throws RespException {
+    public Result<UhfTag> isoSingleTagRead(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
@@ -381,8 +401,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return Result.of(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], data));
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2MultiTagIdentify(byte address) {
+    public byte[] gen2MultiTagIdentify(byte address) {
         // 0x0A address 0x02 0x80 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -395,16 +416,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Byte> gen2MultiTagIdentify(byte[] resp) throws RespException {
+    public Result<Byte> gen2MultiTagIdentify(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 tagCount cc
         checkBasicResp(resp);
         return Result.of(resp, resp[4]);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2EPCWrite(byte address, byte addr, byte[] value) {
+    public byte[] gen2EPCWrite(byte address, byte addr, byte[] value) {
         // 0x0A address 0x05 0x81 addr value(2byte) cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -420,14 +442,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> gen2EPCWrite(byte[] resp) throws RespException {
+    public Result<Void> gen2EPCWrite(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2Lock(byte address, byte memBank, byte control) {
+    public byte[] gen2Lock(byte address, byte memBank, byte control) {
         // 0x0A address 0x04 0x82 memBank control cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -442,14 +465,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> gen2Lock(byte[] resp) throws RespException {
+    public Result<Void> gen2Lock(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2Kill(byte address, byte[] password) {
+    public byte[] gen2Kill(byte address, byte[] password) {
         // 0x0A address 0x06 0x83 password(4byte) cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -463,14 +487,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> gen2Kill(byte[] resp) throws RespException {
+    public Result<Void> gen2Kill(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2Init(byte address, byte bitCount) {
+    public byte[] gen2Init(byte address, byte bitCount) {
         // 0x0A address 0x03 0x84 bitCount cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -484,14 +509,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> gen2Init(byte[] resp) throws RespException {
+    public Result<Void> gen2Init(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2Read(byte address, byte memBank, byte addr, byte count) {
+    public byte[] gen2Read(byte address, byte memBank, byte addr, byte count) {
         // 0x0A address 0x05 0x85 memBank addr count cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -507,9 +533,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<UhfTag> gen2Read(byte[] resp) throws RespException {
+    public Result<UhfTag> gen2Read(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
@@ -521,8 +547,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return Result.of(resp, new UhfTag(UhfTag.TYPE_GEN2_6C, resp[4], data));
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] gen2Write(byte address, byte memBank, byte addr, byte[] value) {
+    public byte[] gen2Write(byte address, byte memBank, byte addr, byte[] value) {
         // 0x0A address 0x06 0x86 memBank addr value(2byte) cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -538,14 +565,15 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> gen2Write(byte[] resp) throws RespException {
+    public Result<Void> gen2Write(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getIDAndDelete(byte address, byte tagCount) {
+    public byte[] getIDAndDelete(byte address, byte tagCount) {
         // 0x0A address 0x03 0x40 tagCount cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -559,9 +587,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<UhfTag[]> getIDAndDelete(byte[] resp) throws RespException {
+    public Result<UhfTag[]> getIDAndDelete(byte[] resp) throws RespException {
         // 0x0B address 14*n+3 0x00 count data(14*n) cc
         checkBasicResp(resp);
         int n = (resp[2] - 3) / 14;
@@ -576,8 +604,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return new Result<>(resp[3], resp[1], uhfTags);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getID(byte address) {
+    public byte[] getID(byte address) {
         // 0x0A address 0x02 0x41 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -590,10 +619,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
-    @SuppressWarnings("Duplicates")
+    @NotNull
     @Override
-    public @NotNull
-    Result<UhfTag> getID(byte[] resp) throws RespException {
+    public Result<UhfTag> getID(byte[] resp) throws RespException {
         // 0x0B address 17 0x00 data(14) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[14];
@@ -602,8 +630,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return new Result<>(resp[3], resp[1], uhfTag);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] getIDACK(byte address) {
+    public byte[] getIDACK(byte address) {
         // 0x0A address 0x02 0x42 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -616,9 +645,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result getIDACK(byte[] resp) throws RespException {
+    public Result getIDACK(byte[] resp) throws RespException {
         // 尝试Obtion无数据应答帧
         try {
             return obtionNonDataResp(resp);
@@ -628,8 +657,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         }
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] queryIDCount(byte address) {
+    public byte[] queryIDCount(byte address) {
         // 0x0A address 0x02 0x43 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -642,16 +672,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Byte> queryIDCount(byte[] resp) throws RespException {
+    public Result<Byte> queryIDCount(byte[] resp) throws RespException {
         // 0x0B	address	0x03 0x00 count cc
         checkBasicResp(resp);
         return new Result<>(resp[3], resp[1], resp[4]);
     }
 
+    @NotNull
     @Override
-    public @NotNull byte[] clearIDBuffer(byte address) {
+    public byte[] clearIDBuffer(byte address) {
         // 0x0A address 0x02 0x44 cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
@@ -664,9 +695,9 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
+    @NotNull
     @Override
-    public @NotNull
-    Result<Void> clearIDBuffer(byte[] resp) throws RespException {
+    public Result<Void> clearIDBuffer(byte[] resp) throws RespException {
         return obtionNonDataResp(resp);
     }
 
