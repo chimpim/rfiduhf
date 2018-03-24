@@ -559,7 +559,6 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         return cmd;
     }
 
-    @SuppressWarnings("Duplicates")
     @Override
     public @NotNull
     Result<UhfTag[]> getIDAndDelete(byte[] resp) throws RespException {

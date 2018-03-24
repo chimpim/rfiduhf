@@ -1,5 +1,6 @@
 package com.chimpim.rfiduhf;
 
+import com.chimpim.rfiduhf.util.TimeUtil;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -81,6 +82,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void isoMultiTagIdentify() throws Exception {
+        clearIDBuffer();
         logger.info(mOperator.isoMultiTagIdentify().toString());
     }
 
@@ -127,6 +129,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void gen2MultiTagIdentify() throws Exception {
+        clearIDBuffer();
         logger.info(mOperator.gen2MultiTagIdentify().toString());
     }
 

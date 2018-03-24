@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class RfidUhfReaderOperator {
-    public static boolean debug = true;
     private static final Logger logger = Logger.getLogger("RfidUhfReaderOperator");
     private final RfidUhfReader mReader;
     private final byte mAddress;
@@ -44,257 +43,254 @@ public class RfidUhfReaderOperator {
 
     public Result<Void> setBaudRate(byte baudRate) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.setBaudRate(mAddress, baudRate);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.setBaudRate(resp);
     }
 
     public Result<Void> resetReader() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.resetReader(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.resetReader(resp);
     }
 
     public Result<Version> getFirmwareVersion() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getFirmwareVersion(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getFirmwareVersion(resp);
     }
 
     public Result<Void> setRF(byte power, byte freq) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.setRF(mAddress, power, freq);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.setRF(resp);
     }
 
     public Result<PowerAndFreq> getRF() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getRF(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getRF(resp);
     }
 
     public Result<Void> setWorkAntenna(byte antenna) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.setWorkAntenna(mAddress, antenna);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.setWorkAntenna(resp);
     }
 
     public Result<Byte> getWorkAntenna() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getWorkAntenna(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getWorkAntenna(resp);
     }
 
     public Result<Byte> isoMultiTagIdentify() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoMultiTagIdentify(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoMultiTagIdentify(resp);
     }
 
     public Result<Byte> isoMultiTagRead(byte startAddr) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoMultiTagRead(mAddress, startAddr);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoMultiTagRead(resp);
     }
 
     public Result<Void> isoWrite(byte addr, byte value) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoWrite(mAddress, addr, value);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoWrite(resp);
     }
 
     public Result<UhfTag> isoReadWithUID(byte[] uid, byte addr) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoReadWithUID(mAddress, uid, addr);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoReadWithUID(resp);
     }
 
     public Result<Void> isoWriteWithUID(byte[] uid, byte addr, byte value) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoWriteWithUID(mAddress, uid, addr, value);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoWriteWithUID(resp);
     }
 
     public Result<Void> isoLock(byte addr) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoLock(mAddress, addr);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoLock(resp);
     }
 
     public Result<Boolean> isoQueryLock(byte addr) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoQueryLock(mAddress, addr);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoQueryLock(resp);
     }
 
     public Result<Void> isoBlockWrite(byte addr, byte[] value) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoBlockWrite(mAddress, addr, value);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoBlockWrite(resp);
     }
 
     public Result<UhfTag> isoSingleTagRead(byte addr) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.isoSingleTagRead(mAddress, addr);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.isoSingleTagRead(resp);
     }
 
     public Result<Byte> gen2MultiTagIdentify() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2MultiTagIdentify(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2MultiTagIdentify(resp);
     }
 
     public Result<Void> gen2EPCWrite(byte addr, byte[] value) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2EPCWrite(mAddress, addr, value);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2EPCWrite(resp);
     }
 
     public Result<Void> gen2Lock(byte memBank, byte control) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2Lock(mAddress, memBank, control);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2Lock(resp);
     }
 
     public Result<Void> gen2Kill(byte[] password) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2Kill(mAddress, password);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2Kill(resp);
     }
 
     public Result<Void> gen2Init(byte bitCount) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2Init(mAddress, bitCount);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2Init(resp);
     }
 
     public Result<UhfTag> gen2Read(byte memBank, byte addr, byte count) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2Read(mAddress, memBank, addr, count);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2Read(resp);
     }
 
     public Result<Void> gen2Write(byte memBank, byte addr, byte[] value) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.gen2Write(mAddress, memBank, addr, value);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.gen2Write(resp);
     }
 
     public Result<UhfTag[]> getIDAndDelete(byte count) throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getIDAndDelete(mAddress, count);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getIDAndDelete(resp);
     }
 
     public Result<UhfTag> getID() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getID(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getID(resp);
     }
 
     public Result getIDACK() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.getIDACK(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.getIDACK(resp);
     }
 
     public Result<Byte> queryIDCount() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.queryIDCount(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.queryIDCount(resp);
     }
 
     public Result<Void> clearIDBuffer() throws IOException, RespException {
         @NotNull byte[] cmd = mProtocol.clearIDBuffer(mAddress);
-        log("cmd: " + Arrays.toString(cmd));
+        logger.info("cmd: " + Arrays.toString(cmd));
         mReader.write(cmd);
         @Nullable byte[] resp = mReader.readResponse();
-        log("resp: " + Arrays.toString(resp));
+        logger.info("resp: " + Arrays.toString(resp));
         return mProtocol.clearIDBuffer(resp);
     }
 
-    private static void log(String msg) {
-        if (debug) logger.info(msg);
-    }
 }
