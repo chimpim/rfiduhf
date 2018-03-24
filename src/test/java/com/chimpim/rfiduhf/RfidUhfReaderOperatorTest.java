@@ -44,7 +44,7 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void disconnect() throws Exception {
-        // set shutdown
+        // see shutdown
     }
 
     @Test
@@ -99,7 +99,17 @@ public class RfidUhfReaderOperatorTest {
 
     @Test
     public void isoMultiTagRead() throws Exception {
+        // 清空缓存区
+        clearIDBuffer();
+        // 多标签识别
         logger.info(mOperator.isoMultiTagRead((byte) 0).toString());
+        // 查询缓存区标签数量
+        Result<Byte> result = mOperator.queryIDCount();
+        logger.info(result.toString());
+        // 从缓存区中取出标签
+        Result<UhfTag[]> result1 = mOperator.getIDAndDelete(result.getPayload());
+        logger.info(result1.toString());
+        logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
