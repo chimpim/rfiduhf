@@ -39,6 +39,12 @@ public class FastUtilTest {
     }
 
     @Test
+    public void isoMultiTagRead() throws Exception {
+        UhfTag[] uhfTags = FastUtil.isoMultiTagRead(mOperator, (byte) 0);
+        logger.info(Arrays.toString(uhfTags));
+    }
+
+    @Test
     public void batchGen2Write() throws Exception {
         byte[] epc = new byte[]{
                 (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,

@@ -55,6 +55,7 @@ public class RfidUhfConstant {
      * 未定义错误
      */
     public static final byte SC_ERR_UNDEFINED = (byte) 0xFF;
+
     // =========================== 波特率 =========================== //
     /**
      * 波特率 9600
@@ -76,6 +77,7 @@ public class RfidUhfConstant {
      * 波特率 115200
      */
     public static final byte BAUD_RATE_115200 = (byte) 0x04;
+
     // =========================== 读写器地址 =========================== //
     /**
      * 公用地址

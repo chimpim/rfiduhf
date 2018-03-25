@@ -72,9 +72,10 @@ class RfidUhfReader {
         //
         byte[] buf2 = new byte[length];
         len = mInputStream.read(buf2);
-        byte[] returnBytes = new byte[3 + length];
-        System.arraycopy(buf, 0, returnBytes, 0, 3);
-        System.arraycopy(buf2, 0, returnBytes, 3, length);
+        // 合并buf 和 buf2
+        byte[] returnBytes = new byte[buf.length + buf2.length];
+        System.arraycopy(buf, 0, returnBytes, 0, buf.length);
+        System.arraycopy(buf2, 0, returnBytes, buf.length, buf2.length);
         return returnBytes;
     }
 }

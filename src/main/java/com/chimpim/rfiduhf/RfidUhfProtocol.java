@@ -7,7 +7,7 @@ import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.RespException;
 import org.jetbrains.annotations.NotNull;
 
-public interface RfidUhfProtocol {
+interface RfidUhfProtocol {
 
     // =========================== 系统设置命令 =========================== //
 
@@ -254,10 +254,10 @@ public interface RfidUhfProtocol {
      * @param address 读写器地址
      * @param memBank 标签区域
      * @param addr    标签地址
-     * @param count   长度
+     * @param len   长度
      * @return 命令
      */
-    @NotNull byte[] gen2Read(byte address, byte memBank, byte addr, byte count);
+    @NotNull byte[] gen2Read(byte address, byte memBank, byte addr, byte len);
 
     @NotNull Result<UhfTag> gen2Read(byte[] resp) throws RespException;
 

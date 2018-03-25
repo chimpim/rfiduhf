@@ -22,6 +22,16 @@ public class FastUtil {
         return result1.getPayload();
     }
 
+    public static UhfTag[] isoMultiTagRead(@NotNull RfidUhfReaderOperator operator, byte startAddr) throws IOException, RespException {
+        // 清空缓存区
+        operator.clearIDBuffer();
+        // 多标签读取
+        Result<Byte> result = operator.isoMultiTagRead(startAddr);
+        // 从缓存区中取出标签
+        Result<UhfTag[]> result1 = operator.getIDAndDelete(result.getPayload());
+        return result1.getPayload();
+    }
+
     public static boolean batchGen2Write(@NotNull RfidUhfReaderOperator operator,
                                          byte memBank, byte startAddr,
                                          @NotNull byte[] values) throws IOException, RespException {
@@ -49,6 +59,5 @@ public class FastUtil {
         Result<UhfTag[]> result1 = operator.getIDAndDelete(result.getPayload());
         return result1.getPayload();
     }
-
 
 }

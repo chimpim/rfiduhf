@@ -517,17 +517,17 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public byte[] gen2Read(byte address, byte memBank, byte addr, byte count) {
+    public byte[] gen2Read(byte address, byte memBank, byte addr, byte len) {
         // 0x0A address 0x05 0x85 memBank addr count cc
         byte[] cmd = new byte[]{
                 REQ_HEAD,
                 address,
-                0x05, // len
+                (byte) 0x05, // len
                 (byte) 0x85, // cmd
                 memBank,
                 addr,
-                count,
-                0x00, // checkCode
+                len,
+                (byte) 0x00, // cc
         };
         cmd[cmd.length - 1] = checkCode(cmd);
         return cmd;
