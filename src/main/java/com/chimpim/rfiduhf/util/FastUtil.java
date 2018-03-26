@@ -32,6 +32,39 @@ public class FastUtil {
         return result1.getPayload();
     }
 
+    public static boolean batchIsoBlockWrite(@NotNull RfidUhfReaderOperator operator,
+                                             byte startAddr, @NotNull byte[] values) throws IOException, RespException {
+        int len = values.length / 4;
+        int index = 0;
+        for (int i = 0; i < len; i++) {
+            byte addr = (byte) (startAddr + i * 4);
+            byte[] value = new byte[]{values[index++], values[index++], values[index++], values[index++]};
+            Result<Void> result = operator.isoBlockWrite(addr, value);
+            logger.info(result.toString());
+            if (!result.isOk()) {
+                logger.info(result.getScName());
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean batchIsoWrite(@NotNull RfidUhfReaderOperator operator,
+                                        byte startAddr, @NotNull byte[] values) throws IOException, RespException {
+        int len = values.length;
+        int index = 0;
+        for (int i = 0; i < len; i++) {
+            byte addr = (byte) (startAddr + i);
+            Result<Void> result = operator.isoWrite(addr, values[index++]);
+            logger.info(result.toString());
+            if (!result.isOk()) {
+                logger.info(result.getScName());
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean batchGen2Write(@NotNull RfidUhfReaderOperator operator,
                                          byte memBank, byte startAddr,
                                          @NotNull byte[] values) throws IOException, RespException {

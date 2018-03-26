@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class FastUtilTest {
     private static final Logger logger = Logger.getLogger("FastUtilTest");
 
-    private static final String port = "COM3";
+    private static final String port = "COM4";
     private RfidUhfReaderOperator mOperator;
 
     @Before
@@ -40,8 +40,34 @@ public class FastUtilTest {
 
     @Test
     public void isoMultiTagRead() throws Exception {
-        UhfTag[] uhfTags = FastUtil.isoMultiTagRead(mOperator, (byte) 0);
+        // 7820A41335335330090A0B0C
+        UhfTag[] uhfTags = FastUtil.isoMultiTagRead(mOperator, (byte) 16);
         logger.info(Arrays.toString(uhfTags));
+    }
+
+
+    @Test
+    public void batchIsoBlockWrite() throws Exception {
+        byte[] values = new byte[]{
+                (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
+                (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08,
+        };
+        boolean result = FastUtil.batchIsoBlockWrite(mOperator, (byte) 16, values);
+        logger.info("result = " + result);
+        UhfTag[] uhfTags = FastUtil.isoMultiTagRead(mOperator, (byte) 16);
+        logger.info("uhfTags = " + Arrays.toString(uhfTags));
+
+    }
+
+    @Test
+    public void batchIsoWrite() throws Exception {
+        byte[] values = new byte[]{
+                (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04
+        };
+        boolean result = FastUtil.batchIsoWrite(mOperator, (byte) 16, values);
+        logger.info("result = " + result);
+        UhfTag[] uhfTags = FastUtil.isoMultiTagRead(mOperator, (byte) 16);
+        logger.info("uhfTags = " + Arrays.toString(uhfTags));
     }
 
     @Test

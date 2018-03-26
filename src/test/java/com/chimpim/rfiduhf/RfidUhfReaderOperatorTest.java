@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 public class RfidUhfReaderOperatorTest {
     private static final Logger logger = Logger.getLogger("RfidUhfReaderOperatorTest");
 
-    private static final String port = "COM3";
+    private static final String port = "COM4";
     private static final byte[] UID = new byte[]{-32, 4, 0, 0, -64, -13, 100, 6};
     private RfidUhfReaderOperator mOperator;
 

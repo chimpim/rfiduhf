@@ -29,14 +29,27 @@ public class RfidUhfReaderOperator {
         mProtocol = protocol;
     }
 
+    /**
+     * 连接读写器
+     *
+     * @throws Exception
+     */
     public void connect() throws Exception {
         mReader.connect();
     }
 
+    /**
+     * 判断读写器是否连接
+     *
+     * @return {@code true} 已连接，{@code false} 未连接
+     */
     public boolean hasConnected() {
         return mReader.hasConnected();
     }
 
+    /**
+     * 断开读写器连接
+     */
     public void disconnect() {
         mReader.disconnect();
     }
@@ -282,7 +295,7 @@ public class RfidUhfReaderOperator {
     /**
      * 将数据块写入6B标签
      *
-     * @param addr  标签地址
+     * @param addr  标签地址,必须是4的整数倍
      * @param value 写入的数据块,长度为4的字节数组
      * @return 无负载数据的结果
      * @throws IOException
