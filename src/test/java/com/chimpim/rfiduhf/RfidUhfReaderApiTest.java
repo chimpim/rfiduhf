@@ -10,15 +10,15 @@ import java.util.Arrays;
 import java.util.logging.Logger;
 
 public class RfidUhfReaderApiTest {
-    private static final Logger logger = Logger.getLogger("RfidUhfReaderApiTest");
+    private static final Logger logger = Logger.getLogger("RfidUhfReaderApiTest3");
 
-    private static final String port = "COM13";
+    private static final String port = "COM4";
     private static final byte[] UID = new byte[]{-32, 4, 0, 0, -64, -13, 100, 6};
     private RfidUhfReaderApi mRfidUhfReaderApi;
 
     @Before
     public void setUp() throws Exception {
-        DefaultRfidUhfReaderConnAdapter adapter = new DefaultRfidUhfReaderConnAdapter(port);
+        RfidUhfReaderConnAdapterImpl adapter = new RfidUhfReaderConnAdapterImpl(port);
         mRfidUhfReaderApi = RfidUhfReaderApiFactory.create(adapter);
         mRfidUhfReaderApi.connect();
     }
@@ -30,9 +30,10 @@ public class RfidUhfReaderApiTest {
         }
     }
 
+
     @Test
     public void connect() throws Exception {
-        // see setup
+        // see setUp
     }
 
     @Test
@@ -43,7 +44,7 @@ public class RfidUhfReaderApiTest {
 
     @Test
     public void disconnect() throws Exception {
-        // see shutdown
+        // see tearDown
     }
 
     @Test
@@ -62,13 +63,14 @@ public class RfidUhfReaderApiTest {
     }
 
     @Test
-    public void setRF() throws Exception {
-        logger.info(mRfidUhfReaderApi.setRF((byte) 10, (byte) 1).toString());
+    public void setRf() throws Exception {
+        logger.info(mRfidUhfReaderApi.setRf((byte) 10, (byte) 1).toString());
+
     }
 
     @Test
-    public void getRF() throws Exception {
-        logger.info(mRfidUhfReaderApi.getRF().toString());
+    public void getRf() throws Exception {
+        logger.info(mRfidUhfReaderApi.getRf().toString());
     }
 
     @Test
@@ -82,199 +84,213 @@ public class RfidUhfReaderApiTest {
     }
 
     @Test
-    public void isoMultiTagIdentify() throws Exception {
+    public void setWorkMode() throws Exception {
+        logger.info(mRfidUhfReaderApi.setWorkMode(RfidUhfConstant.WORK_MODE_TRIGGER).toString());
+    }
+
+    @Test
+    public void getWorkMode() throws Exception {
+        logger.info(mRfidUhfReaderApi.getWorkMode().toString());
+    }
+
+
+    @Test
+    public void multiTagIdentify6b() throws Exception {
         // 清空缓存区
-        clearIDBuffer();
+        clearIdBuffer();
         // 多标签识别
-        logger.info(mRfidUhfReaderApi.isoMultiTagIdentify().toString());
+        logger.info(mRfidUhfReaderApi.multiTagIdentify6b().toString());
         // 查询缓存区标签数量
-        Result<Byte> result = mRfidUhfReaderApi.queryIDCount();
+        Result<Byte> result = mRfidUhfReaderApi.queryIdCount();
         logger.info(result.toString());
         // 从缓存区中取出标签
-        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIDAndDelete(result.getPayload());
+        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIdAndDelete(result.getPayload());
         logger.info(result1.toString());
         logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
-    public void isoMultiTagRead() throws Exception {
+    public void multiTagRead6b() throws Exception {
         // 清空缓存区
-        clearIDBuffer();
+        clearIdBuffer();
         // 多标签识别
-        logger.info(mRfidUhfReaderApi.isoMultiTagRead((byte) 0).toString());
+        logger.info(mRfidUhfReaderApi.multiTagRead6b((byte) 0).toString());
         // 查询缓存区标签数量
-        Result<Byte> result = mRfidUhfReaderApi.queryIDCount();
+        Result<Byte> result = mRfidUhfReaderApi.queryIdCount();
         logger.info(result.toString());
         // 从缓存区中取出标签
-        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIDAndDelete(result.getPayload());
+        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIdAndDelete(result.getPayload());
         logger.info(result1.toString());
         logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
-    public void isoWrite() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoWrite((byte) 0, (byte) 0xFF).toString());
+    public void write6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.write6b((byte) 0, (byte) 0xFF).toString());
     }
 
     @Test
-    public void isoReadWithUID() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoReadWithUID(UID, (byte) 0).toString());
+    public void readWithUid6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.readWithUid6b(UID, (byte) 0).toString());
     }
 
     @Test
-    public void isoWriteWithUID() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoWriteWithUID(UID, (byte) 0, (byte) 0xFF).toString());
+    public void writeWithUid6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.writeWithUid6b(UID, (byte) 0, (byte) 0xFF).toString());
     }
 
     @Test
-    public void isoLock() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoLock((byte) 0).toString());
+    public void lock6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.lock6b((byte) 0).toString());
+
     }
 
     @Test
-    public void isoQueryLock() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoQueryLock((byte) 0).toString());
+    public void queryLock6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.queryLock6b((byte) 0).toString());
+
     }
 
     @Test
-    public void isoBlockWrite() throws Exception {
+    public void blockWrite6b() throws Exception {
         byte[] value = new byte[4];
-        logger.info(mRfidUhfReaderApi.isoBlockWrite((byte) 0, value).toString());
+        logger.info(mRfidUhfReaderApi.blockWrite6b((byte) 0, value).toString());
+    }
+
+
+    @Test
+    public void singleTagRead6b() throws Exception {
+        logger.info(mRfidUhfReaderApi.singleTagRead6b((byte) 0).toString());
+
     }
 
     @Test
-    public void isoSingleTagRead() throws Exception {
-        logger.info(mRfidUhfReaderApi.isoSingleTagRead((byte) 0).toString());
-    }
-
-    @Test
-    public void gen2MultiTagIdentify() throws Exception {
+    public void multiTagIdentify6c() throws Exception {
         // 清空缓存区
-        clearIDBuffer();
+        clearIdBuffer();
         // 多标签识别
-        logger.info(mRfidUhfReaderApi.gen2MultiTagIdentify().toString());
+        logger.info(mRfidUhfReaderApi.multiTagIdentify6c().toString());
         // 查询缓存区标签数量
-        Result<Byte> result = mRfidUhfReaderApi.queryIDCount();
+        Result<Byte> result = mRfidUhfReaderApi.queryIdCount();
         logger.info(result.toString());
         // 从缓存区中取出标签
-        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIDAndDelete(result.getPayload());
+        Result<UhfTag[]> result1 = mRfidUhfReaderApi.getIdAndDelete(result.getPayload());
         logger.info(result1.toString());
         logger.info(Arrays.toString(result1.getPayload()));
     }
 
     @Test
-    public void gen2EPCWrite() throws Exception {
+    public void epcWrite6c() throws Exception {
         byte[] value = new byte[2];
-        logger.info(mRfidUhfReaderApi.gen2EPCWrite((byte) 0, value).toString());
+        logger.info(mRfidUhfReaderApi.epcWrite6c((byte) 0, value).toString());
     }
 
     @Test
-    public void gen2Lock() throws Exception {
-        logger.info(mRfidUhfReaderApi.gen2Lock(RfidUhfConstant.MEM_BANK_EPC, RfidUhfConstant.CONTROL_NOT_LOCK).toString());
+    public void lock6c() throws Exception {
+        logger.info(mRfidUhfReaderApi.lock6c(RfidUhfConstant.MEM_BANK_EPC, RfidUhfConstant.CONTROL_NOT_LOCK).toString());
     }
 
     @Test
-    public void gen2Kill() throws Exception {
+    public void kill6c() throws Exception {
         byte[] password = new byte[4];
-        logger.info(mRfidUhfReaderApi.gen2Kill(password).toString());
+        logger.info(mRfidUhfReaderApi.kill6c(password).toString());
     }
 
     @Test
-    public void gen2Init() throws Exception {
-        logger.info(mRfidUhfReaderApi.gen2Init((byte) 96).toString());
+    public void init6c() throws Exception {
+        logger.info(mRfidUhfReaderApi.init6c((byte) 96).toString());
     }
 
     @Test
-    public void gen2Read() throws Exception {
-        logger.info(mRfidUhfReaderApi.gen2Read(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
+    public void read6c() throws Exception {
+        logger.info(mRfidUhfReaderApi.read6c(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
     }
 
     @Test
-    public void gen2Write() throws Exception {
+    public void write6c() throws Exception {
         byte[] value = new byte[]{0x01, 0x01};
-        logger.info(mRfidUhfReaderApi.gen2Write(RfidUhfConstant.MEM_BANK_EPC, (byte) 4, value).toString());
+        logger.info(mRfidUhfReaderApi.write6c(RfidUhfConstant.MEM_BANK_EPC, (byte) 4, value).toString());
     }
 
     @Test
-    public void getIDAndDelete() throws Exception {
-        logger.info(mRfidUhfReaderApi.getIDAndDelete((byte) 1).toString());
+    public void getIdAndDelete() throws Exception {
+        logger.info(mRfidUhfReaderApi.getIdAndDelete((byte) 1).toString());
     }
 
     @Test
-    public void getID() throws Exception {
-        logger.info(mRfidUhfReaderApi.getID().toString());
+    public void getId() throws Exception {
+        logger.info(mRfidUhfReaderApi.getId().toString());
     }
 
     @Test
-    public void getIDACK() throws Exception {
-        logger.info(mRfidUhfReaderApi.getIDACK().toString());
+    public void getIdAck() throws Exception {
+        logger.info(mRfidUhfReaderApi.getIdAck().toString());
     }
 
     @Test
-    public void queryIDCount() throws Exception {
-        logger.info(mRfidUhfReaderApi.queryIDCount().toString());
+    public void queryIdCount() throws Exception {
+        logger.info(mRfidUhfReaderApi.queryIdCount().toString());
     }
 
     @Test
-    public void clearIDBuffer() throws Exception {
-        logger.info(mRfidUhfReaderApi.clearIDBuffer().toString());
+    public void clearIdBuffer() throws Exception {
+        logger.info(mRfidUhfReaderApi.clearIdBuffer().toString());
     }
 
     @Test
-    public void fastIsoMultiTagIdentify() throws Exception {
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastIsoMultiTagIdentify();
-        logger.info(Arrays.toString(uhfTags));
+    public void fastBatchBlockWrite6b() throws Exception {
+        byte[] values = new byte[]{
+                (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04
+        };
+        boolean result = mRfidUhfReaderApi.fastBatchBlockWrite6b((byte) 16, values);
+        logger.info("result = " + result);
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagRead6b((byte) 16);
+        logger.info("uhfTags = " + Arrays.toString(uhfTags));
     }
 
     @Test
-    public void fastIsoMultiTagRead() throws Exception {
-        // 7820A41335335330090A0B0C
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastIsoMultiTagRead((byte) 16);
-        logger.info(Arrays.toString(uhfTags));
-    }
-
-    @Test
-    public void fastBatchIsoWrite() throws Exception {
+    public void fastBatchWrite6b() throws Exception {
         byte[] values = new byte[]{
                 (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
                 (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08,
         };
-        boolean result = mRfidUhfReaderApi.fastBatchIsoWrite((byte) 16, values);
+        boolean result = mRfidUhfReaderApi.fastBatchWrite6b((byte) 16, values);
         logger.info("result = " + result);
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastIsoMultiTagRead((byte) 16);
-        logger.info("uhfTags = " + Arrays.toString(uhfTags));
-
-    }
-
-    @Test
-    public void fastBatchIsoBlockWrite() throws Exception {
-        byte[] values = new byte[]{
-                (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04
-        };
-        boolean result = mRfidUhfReaderApi.fastBatchIsoBlockWrite((byte) 16, values);
-        logger.info("result = " + result);
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastIsoMultiTagRead((byte) 16);
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagRead6b((byte) 16);
         logger.info("uhfTags = " + Arrays.toString(uhfTags));
     }
 
     @Test
-    public void fastGen2MultiTagIdentify() throws Exception {
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastGen2MultiTagIdentify();
+    public void fastMultiTagRead6b() throws Exception {
+        // 7820A41335335330090A0B0C
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagRead6b((byte) 16);
         logger.info(Arrays.toString(uhfTags));
     }
 
     @Test
-    public void fastBatchGen2Write() throws Exception {
+    public void fastMultiTagIdentify6b() throws Exception {
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagIdentify6b();
+        logger.info(Arrays.toString(uhfTags));
+    }
+
+    @Test
+    public void fastBatchWrite6c() throws Exception {
         byte[] epc = new byte[]{
                 (byte) 0x01, (byte) 0x02, (byte) 0x03, (byte) 0x04,
                 (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08,
                 (byte) 0x09, (byte) 0x0A, (byte) 0x0B, (byte) 0x0C,
         };
-        boolean result = mRfidUhfReaderApi.fastBatchGen2Write(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, epc);
+        boolean result = mRfidUhfReaderApi.fastBatchWrite6c(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, epc);
         logger.info("result = " + result);
-        Result<UhfTag> uhfTagResult = mRfidUhfReaderApi.gen2Read(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, (byte) 6);
+        Result<UhfTag> uhfTagResult = mRfidUhfReaderApi.read6c(RfidUhfConstant.MEM_BANK_EPC, (byte) 2, (byte) 6);
         logger.info("result = " + uhfTagResult);
-        UhfTag[] uhfTags = mRfidUhfReaderApi.fastGen2MultiTagIdentify();
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagIdentify6c();
+        logger.info(Arrays.toString(uhfTags));
+    }
+
+    @Test
+    public void fastMultiTagIdentify6c() throws Exception {
+        UhfTag[] uhfTags = mRfidUhfReaderApi.fastMultiTagIdentify6c();
         logger.info(Arrays.toString(uhfTags));
     }
 }

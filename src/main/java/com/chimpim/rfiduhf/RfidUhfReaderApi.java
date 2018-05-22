@@ -66,26 +66,6 @@ public interface RfidUhfReaderApi {
     Result<Version> getFirmwareVersion() throws IOException, RespException;
 
     /**
-     * 设置功率和频率
-     *
-     * @param power 功率
-     * @param freq  频率
-     * @return 无负载数据的结果
-     * @throws IOException   读卡器IO异常
-     * @throws RespException 响应异常
-     */
-    Result<Void> setRF(byte power, byte freq) throws IOException, RespException;
-
-    /**
-     * 获取功率和频率
-     *
-     * @return 带有功率和频率负载数据的结果
-     * @throws IOException   读卡器IO异常
-     * @throws RespException 响应异常
-     */
-    Result<PowerAndFreq> getRF() throws IOException, RespException;
-
-    /**
      * 设置读写器工作天线
      *
      * @param antCfg 工作天线参数。采用位掩码的设计方式，D0~D7为0或1表示相应的天线不工作或工作。
@@ -104,26 +84,67 @@ public interface RfidUhfReaderApi {
      */
     Result<Byte> getWorkAntenna() throws IOException, RespException;
 
+    /**
+     * 获取读写器工作模式
+     *
+     * @return 带有读写器工作模式负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<Byte> getWorkMode() throws IOException, RespException;
+
+    /**
+     * @param workMode 工作模式
+     *                 {@link RfidUhfConstant#WORK_MODE_COMMAND}
+     *                 {@link RfidUhfConstant#WORK_MODE_TIMEING}
+     *                 {@link RfidUhfConstant#WORK_MODE_TRIGGER}
+     * @return 无负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<Void> setWorkMode(byte workMode) throws IOException, RespException;
+
+    /**
+     * 设置功率和频率
+     *
+     * @param power 功率
+     * @param freq  频率
+     * @return 无负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<Void> setRf(byte power, byte freq) throws IOException, RespException;
+
+    /**
+     * 获取功率和频率
+     *
+     * @return 带有功率和频率负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<PowerAndFreq> getRf() throws IOException, RespException;
+
+
     //======================== 6B标签 ========================//
 
     /**
-     * 6B多标签识别，使用前先调用{@link RfidUhfReaderApiImpl#clearIDBuffer()}
+     * 6B多标签识别，使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()}
      *
      * @return 带有识别到的标签数量负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Byte> isoMultiTagIdentify() throws IOException, RespException;
+    Result<Byte> multiTagIdentify6b() throws IOException, RespException;
 
     /**
-     * 6B多标签读取,使用前先调用{@link RfidUhfReaderApiImpl#clearIDBuffer()}
+     * 6B多标签读取,使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()} ()}
      *
      * @param startAddr 标签开始地址
      * @return 带有读到标签数量负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Byte> isoMultiTagRead(byte startAddr) throws IOException, RespException;
+    Result<Byte> multiTagRead6b(byte startAddr) throws IOException, RespException;
 
     /**
      * 将数据写入6B标签
@@ -134,7 +155,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> isoWrite(byte addr, byte value) throws IOException, RespException;
+    Result<Void> write6b(byte addr, byte value) throws IOException, RespException;
 
     /**
      * 读取特定UID的6B标签，每次可读取8个字节
@@ -145,7 +166,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> isoReadWithUID(byte[] uid, byte addr) throws IOException, RespException;
+    Result<UhfTag> readWithUid6b(byte[] uid, byte addr) throws IOException, RespException;
 
     /**
      * 将数据写入特定UID的6B标签
@@ -157,7 +178,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> isoWriteWithUID(byte[] uid, byte addr, byte value) throws IOException, RespException;
+    Result<Void> writeWithUid6b(byte[] uid, byte addr, byte value) throws IOException, RespException;
 
     /**
      * 锁定6B标签的特定地址
@@ -167,7 +188,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> isoLock(byte addr) throws IOException, RespException;
+    Result<Void> lock6b(byte addr) throws IOException, RespException;
 
     /**
      * 查询6B标签特定的特定地址是否被锁定
@@ -177,7 +198,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Boolean> isoQueryLock(byte addr) throws IOException, RespException;
+    Result<Boolean> queryLock6b(byte addr) throws IOException, RespException;
 
     /**
      * 将数据块写入6B标签
@@ -188,7 +209,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> isoBlockWrite(byte addr, byte[] value) throws IOException, RespException;
+    Result<Void> blockWrite6b(byte addr, byte[] value) throws IOException, RespException;
 
     /**
      * 6B标签单标签读取，每次可读取8个字节
@@ -198,18 +219,18 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> isoSingleTagRead(byte addr) throws IOException, RespException;
+    Result<UhfTag> singleTagRead6b(byte addr) throws IOException, RespException;
 
     //======================== 6C标签 ========================//
 
     /**
-     * 6C多标签识别，使用前先调用{@link RfidUhfReaderApiImpl#clearIDBuffer()}
+     * 6C多标签识别，使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()} ()}
      *
      * @return 带有读到标签数量负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Byte> gen2MultiTagIdentify() throws IOException, RespException;
+    Result<Byte> multiTagIdentify6c() throws IOException, RespException;
 
     /**
      * 将数据写入6C标签
@@ -220,7 +241,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> gen2EPCWrite(byte addr, byte[] value) throws IOException, RespException;
+    Result<Void> epcWrite6c(byte addr, byte[] value) throws IOException, RespException;
 
     /**
      * 锁定6C卡特定的标签区域
@@ -231,7 +252,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> gen2Lock(byte memBank, byte control) throws IOException, RespException;
+    Result<Void> lock6c(byte memBank, byte control) throws IOException, RespException;
 
     /**
      * 销毁6C标签
@@ -241,7 +262,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> gen2Kill(byte[] password) throws IOException, RespException;
+    Result<Void> kill6c(byte[] password) throws IOException, RespException;
 
     /**
      * 初始化6C标签
@@ -251,7 +272,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> gen2Init(byte bitCount) throws IOException, RespException;
+    Result<Void> init6c(byte bitCount) throws IOException, RespException;
 
     /**
      * 读取6C标签的特定区域
@@ -263,7 +284,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> gen2Read(byte memBank, byte addr, byte len) throws IOException, RespException;
+    Result<UhfTag> read6c(byte memBank, byte addr, byte len) throws IOException, RespException;
 
     /**
      * 将数据写入6C标签的特定区域
@@ -275,7 +296,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> gen2Write(byte memBank, byte addr, byte[] value) throws IOException, RespException;
+    Result<Void> write6c(byte memBank, byte addr, byte[] value) throws IOException, RespException;
 
     //======================== 缓存命令 ========================//
 
@@ -288,7 +309,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag[]> getIDAndDelete(byte count) throws IOException, RespException;
+    Result<UhfTag[]> getIdAndDelete(byte count) throws IOException, RespException;
 
     /**
      * 从缓存中取标签数据命令，取完后保留数据
@@ -297,7 +318,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> getID() throws IOException, RespException;
+    Result<UhfTag> getId() throws IOException, RespException;
 
     /**
      * 数据取出成功的反馈，读写器收到此命令后，删除之前所传的数据
@@ -306,7 +327,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result getIDACK() throws IOException, RespException;
+    Result getIdAck() throws IOException, RespException;
 
     /**
      * 查询缓存区中的标签数量
@@ -315,7 +336,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Byte> queryIDCount() throws IOException, RespException;
+    Result<Byte> queryIdCount() throws IOException, RespException;
 
     /**
      * 清空缓存区
@@ -324,19 +345,20 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<Void> clearIDBuffer() throws IOException, RespException;
+    Result<Void> clearIdBuffer() throws IOException, RespException;
 
     //======================== 便捷操作 ========================//
 
-    UhfTag[] fastIsoMultiTagIdentify() throws IOException, RespException;
+    boolean fastBatchBlockWrite6b(byte startAddr, @NotNull byte[] values) throws IOException, RespException;
 
-    UhfTag[] fastIsoMultiTagRead(byte startAddr) throws IOException, RespException;
+    boolean fastBatchWrite6b(byte startAddr, @NotNull byte[] values) throws IOException, RespException;
 
-    boolean fastBatchIsoWrite(byte startAddr, @NotNull byte[] values) throws IOException, RespException;
+    UhfTag[] fastMultiTagRead6b(byte startAddr) throws IOException, RespException;
 
-    boolean fastBatchIsoBlockWrite(byte startAddr, @NotNull byte[] values) throws IOException, RespException;
+    UhfTag[] fastMultiTagIdentify6b() throws IOException, RespException;
 
-    UhfTag[] fastGen2MultiTagIdentify() throws IOException, RespException;
+    boolean fastBatchWrite6c(byte memBank, byte startAddr, @NotNull byte[] values) throws IOException, RespException;
 
-    boolean fastBatchGen2Write(byte memBank, byte startAddr, @NotNull byte[] values) throws IOException, RespException;
+    UhfTag[] fastMultiTagIdentify6c() throws IOException, RespException;
+
 }

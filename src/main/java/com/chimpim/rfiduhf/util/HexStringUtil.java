@@ -2,6 +2,7 @@ package com.chimpim.rfiduhf.util;
 
 public class HexStringUtil {
 
+
     public static String bytesToHexString(byte[] bytes) {
         if (null == bytes) return "";
         StringBuilder strBuilder = new StringBuilder();

@@ -2,6 +2,14 @@ package com.chimpim.rfiduhf;
 
 public class RfidUhfConstant {
 
+    /**
+     * 请求头
+     */
+    public static final  byte REQ_HEAD = (byte) 0x0A;
+    /**
+     * 响应头
+     */
+    public static final  byte RESP_HEAD = (byte) 0x0B;
 
     // =========================== 响应状态码 =========================== //
     /**
@@ -70,6 +78,19 @@ public class RfidUhfConstant {
      * 波特率 115200
      */
     public static final byte BAUD_RATE_115200 = (byte) 0x04;
+
+    /**
+     * 命令工作模式
+     */
+    public static final byte WORK_MODE_COMMAND = (byte) 0x00;
+    /**
+     * 定时工作模式
+     */
+    public static final byte WORK_MODE_TIMEING = (byte) 0x01;
+    /**
+     * 触发工作模式
+     */
+    public static final byte WORK_MODE_TRIGGER = (byte) 0x02;
 
     // =========================== 读写器地址 =========================== //
     /**

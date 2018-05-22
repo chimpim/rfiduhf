@@ -65,7 +65,7 @@ public class Result<T> {
     @Override
     public String toString() {
         return "Result{" +
-                "sc=" + sc +
+                "sc=" + getScName() +
                 ", address=" + address +
                 ", payload=" + payload +
                 '}';

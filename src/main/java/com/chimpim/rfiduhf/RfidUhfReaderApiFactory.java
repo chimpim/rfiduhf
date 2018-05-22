@@ -20,7 +20,7 @@ public final class RfidUhfReaderApiFactory {
                                           int readResponseInterval,
                                           int readResponseCount) {
         RfidUhfReader reader = new RfidUhfReader(adapter, readResponseInterval, readResponseCount);
-        return new RfidUhfReaderApiImpl(reader, address, RfidUhfProtocolImpl.INSTANCE);
+        return new RfidUhfReaderApiImpl(reader, address, new RfidUhfProtocolImpl());
     }
 
 }
