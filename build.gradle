@@ -1,16 +1,26 @@
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+}
+
 group 'com.chimpim'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.7
+
+sourceCompatibility = JavaVersion.VERSION_1_7
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'org.jetbrains:annotations:15.0'
+    compile 'org.jetbrains:annotations:13.0'
     testCompile 'junit:junit:4.12'
     testCompile fileTree(dir: 'testlibs', include: ['*.jar'])
 }

@@ -1,4 +1,4 @@
-package com.chimpim.rfiduhf;
+package com.chimpim.rfiduhf.internal;
 
 import com.chimpim.rfiduhf.data.PowerAndFreq;
 import com.chimpim.rfiduhf.data.Result;
@@ -7,15 +7,11 @@ import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.*;
 import org.jetbrains.annotations.NotNull;
 
-import static com.chimpim.rfiduhf.RfidUhfConstant.REQ_HEAD;
-import static com.chimpim.rfiduhf.RfidUhfConstant.RESP_HEAD;
+public class RfidUhfProtocolImpl implements RfidUhfProtocol {
+    public static final RfidUhfProtocolImpl INSTANCE = new RfidUhfProtocolImpl();
 
-class DefaultRfidUhfProtocol implements RfidUhfProtocol {
-    static final DefaultRfidUhfProtocol INSTANCE = new DefaultRfidUhfProtocol();
-
-    private DefaultRfidUhfProtocol() {
+    private RfidUhfProtocolImpl() {
     }
-
 
     @NotNull
     @Override
@@ -599,7 +595,7 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         for (int i = 0; i < uhfTags.length; i++) {
             byte[] bytes = new byte[14];
             System.arraycopy(data, i * 14, bytes, 0, 14);
-            uhfTags[i] = UhfTag.of14bytes(bytes);
+            uhfTags[i] = newUhfTagOf14bytes(bytes);
         }
         return new Result<>(resp[3], resp[1], uhfTags);
     }
@@ -626,7 +622,7 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         checkBasicResp(resp);
         byte[] bytes = new byte[14];
         System.arraycopy(resp, 0, bytes, 0, 14);
-        UhfTag uhfTag = UhfTag.of14bytes(bytes);
+        UhfTag uhfTag = newUhfTagOf14bytes(bytes);
         return new Result<>(resp[3], resp[1], uhfTag);
     }
 
@@ -736,12 +732,18 @@ class DefaultRfidUhfProtocol implements RfidUhfProtocol {
         }
     }
 
-    private static byte checkCode(byte[] bytes) {
+    private static byte checkCode(@NotNull byte[] bytes) {
         int sum = 0;
         int size = bytes.length;
         for (int i = 0; i < size - 1; i++) {
             sum += bytes[i];
         }
         return (byte) (0xFF & (~sum + 1));
+    }
+
+    private static UhfTag newUhfTagOf14bytes(@NotNull byte[] bytes) {
+        byte[] data = new byte[12];
+        System.arraycopy(bytes, 2, data, 0, 12);
+        return new UhfTag(bytes[0], bytes[1], data);
     }
 }

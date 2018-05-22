@@ -1,5 +1,6 @@
-package com.chimpim.rfiduhf;
+package com.chimpim.rfiduhf.internal;
 
+import com.chimpim.rfiduhf.RfidUhfReaderConnAdapter;
 import com.chimpim.rfiduhf.util.TimeUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,36 +9,48 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class RfidUhfReader {
+public class RfidUhfReader {
     private RfidUhfReaderConnAdapter mConnectionAdapter;
-    private @Nullable InputStream mInputStream;
-    private @Nullable OutputStream mOutputStream;
+    @Nullable
+    private InputStream mInputStream;
+    @Nullable
+    private OutputStream mOutputStream;
 
-    RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter) {
-        this.mConnectionAdapter = adapter;
+    private final int readResponseInterval;
+    private final int readResponseCount;
+
+
+    public RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter) {
+        this(adapter, 10, 50);
     }
 
-    void connect() throws Exception {
+    public RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter, int readResponseInterval, int readResponseCount) {
+        this.mConnectionAdapter = adapter;
+        this.readResponseInterval = readResponseInterval;
+        this.readResponseCount = readResponseCount;
+    }
+
+    public void connect() throws Exception {
         mConnectionAdapter.connect();
         mInputStream = mConnectionAdapter.getInputStream();
         mOutputStream = mConnectionAdapter.getOutputStream();
     }
 
-    boolean hasConnected() {
+    public boolean hasConnected() {
         return mConnectionAdapter.hasConnected();
     }
 
-    void disconnect() {
+    public void disconnect() {
         mConnectionAdapter.disconnect();
     }
 
-    void write(@NotNull byte[] cmd) throws IOException {
+    public void write(@NotNull byte[] cmd) throws IOException {
         writeAndFlush(cmd);
     }
 
     @Nullable
-    byte[] readResponse() throws IOException {
-        return readResponse(10, 50);
+    public byte[] readResponse() throws IOException {
+        return readResponse(readResponseInterval, readResponseCount);
     }
 
     private synchronized void writeAndFlush(@NotNull byte[] cmd) throws IOException {

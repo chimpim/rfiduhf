@@ -1,14 +1,7 @@
 package com.chimpim.rfiduhf;
 
 public class RfidUhfConstant {
-    /**
-     * 请求头
-     */
-    public static final byte REQ_HEAD = (byte) 0x0A;
-    /**
-     * 响应头
-     */
-    public static final byte RESP_HEAD = (byte) 0x0B;
+
 
     // =========================== 响应状态码 =========================== //
     /**

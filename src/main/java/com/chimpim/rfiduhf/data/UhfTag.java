@@ -14,12 +14,6 @@ public class UhfTag {
 
     private byte[] data;
 
-    public static UhfTag of14bytes(byte[] bytes) {
-        byte[] data = new byte[12];
-        System.arraycopy(bytes, 2, data, 0, 12);
-        return new UhfTag(bytes[0], bytes[1], data);
-    }
-
     public UhfTag(byte type, byte ant, byte[] data) {
         this.type = type;
         this.ant = ant;

@@ -2,6 +2,7 @@ package com.chimpim.rfiduhf.exception;
 
 public class RespException extends Exception {
 
+    private static final long serialVersionUID = -8680590818321104289L;
     private byte[] resp;
 
     RespException(byte[] resp, String message) {
