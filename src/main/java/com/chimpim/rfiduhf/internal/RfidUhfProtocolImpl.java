@@ -518,7 +518,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @Override
     public Result<Version> getFirmwareVersion(byte[] resp) throws RespException {
         checkBasicResp(resp);
-        return Result.of(resp, new Version(resp[4], resp[5]));
+        return newResult(resp, new Version(resp[4], resp[5]));
     }
 
     @NotNull
@@ -532,7 +532,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     public Result<PowerAndFreq> getRf(byte[] resp) throws RespException {
         // 0x0B address 0x04 0x00 power freq cc
         checkBasicResp(resp);
-        return Result.of(resp, new PowerAndFreq(resp[4], resp[5]));
+        return newResult(resp, new PowerAndFreq(resp[4], resp[5]));
     }
 
     @NotNull
@@ -545,8 +545,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @Override
     public Result<Byte> getWorkAntenna(byte[] resp) throws RespException {
         // 0x0A address 0x03 0x00 antenna cc
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
     }
 
     @NotNull
@@ -559,24 +558,22 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @Override
     public Result<Byte> getWorkMode(byte[] resp) throws RespException {
         // 0B address len 00 workMode F4
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
     }
 
     @NotNull
     @Override
     public Result<Byte> multiTagIdentify6b(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 tagCount cc
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
     }
 
     @NotNull
     @Override
     public Result<Byte> multiTagRead6b(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 TagCount cc
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
+
     }
 
     @NotNull
@@ -592,7 +589,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         checkBasicResp(resp);
         byte[] bytes = new byte[8];
         System.arraycopy(resp, 5, bytes, 0, bytes.length);
-        return Result.of(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], bytes));
+        return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], bytes));
     }
 
     @NotNull
@@ -614,11 +611,11 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         checkBasicResp(resp);
         byte lockStatus = resp[4];
         if (lockStatus == 0x00) {
-            return Result.of(resp, false);
+            return newResult(resp, false);
         } else if (lockStatus == 0x01) {
-            return Result.of(resp, true);
+            return newResult(resp, true);
         }
-        return Result.of(resp, null);
+        return newResult(resp, null);
     }
 
     @NotNull
@@ -634,19 +631,18 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
         if (dataLen < 0) {
-            return Result.of(resp, null);
+            return newResult(resp, null);
         }
         byte[] data = new byte[dataLen];
         System.arraycopy(resp, 5, data, 0, data.length);
-        return Result.of(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], data));
+        return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], data));
     }
 
     @NotNull
     @Override
     public Result<Byte> multiTagIdentify6c(byte[] resp) throws RespException {
         // 0x0B address 0x03 0x00 tagCount cc
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
     }
 
     @NotNull
@@ -680,11 +676,11 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
         if (dataLen < 0) {
-            return Result.of(resp, null);
+            return newResult(resp, null);
         }
         byte[] data = new byte[dataLen];
         System.arraycopy(resp, 5, data, 0, data.length);
-        return Result.of(resp, new UhfTag(UhfTag.TYPE_GEN2_6C, resp[4], data));
+        return newResult(resp, new UhfTag(UhfTag.TYPE_GEN2_6C, resp[4], data));
     }
 
     @NotNull
@@ -737,8 +733,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @Override
     public Result<Byte> queryIdCount(byte[] resp) throws RespException {
         // 0x0B	address	0x03 0x00 count cc
-        checkBasicResp(resp);
-        return Result.of(resp, resp[4]);
+        return obtionByteResp(resp);
     }
 
     @NotNull
@@ -752,6 +747,11 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         // 0x0B address len status cc
         checkBasicResp(resp);
         return new Result<>(resp[3], resp[1], null);
+    }
+
+    private static Result<Byte> obtionByteResp(byte[] resp) throws RespException {
+        checkBasicResp(resp);
+        return newResult(resp, resp[4]);
     }
 
     private static void checkBasicResp(byte[] resp) throws RespNullException, RespLenException, RespHeadException, RespScException {
@@ -796,4 +796,9 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         System.arraycopy(bytes, 2, data, 0, 12);
         return new UhfTag(bytes[0], bytes[1], data);
     }
+
+    private static <T> Result<T> newResult(byte[] resp, T payload) {
+        return new Result<>(resp[3], resp[1], payload);
+    }
+
 }

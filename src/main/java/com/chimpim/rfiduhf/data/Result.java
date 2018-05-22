@@ -7,9 +7,6 @@ public class Result<T> {
     private byte address;
     private T payload;
 
-    public static <T> Result<T> of(byte[] resp, T payload) {
-        return new Result<>(resp[3], resp[1], payload);
-    }
 
     public Result(byte sc, byte address, T payload) {
         this.sc = sc;

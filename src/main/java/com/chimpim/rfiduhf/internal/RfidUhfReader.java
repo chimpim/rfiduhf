@@ -15,14 +15,8 @@ public class RfidUhfReader {
     private InputStream mInputStream;
     @Nullable
     private OutputStream mOutputStream;
-
     private final int readResponseInterval;
     private final int readResponseCount;
-
-
-    public RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter) {
-        this(adapter, 10, 50);
-    }
 
     public RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter, int readResponseInterval, int readResponseCount) {
         this.mConnectionAdapter = adapter;
@@ -64,7 +58,7 @@ public class RfidUhfReader {
         if (mInputStream == null) throw new IOException("mInputStream == null");
         int counter = 0;
         int available = mInputStream.available();
-        // 最多循环500毫秒
+        // 最多循环interval * count毫秒
         while (available < 3) {
             available = mInputStream.available();
             // 时间超时
