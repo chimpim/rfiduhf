@@ -8,19 +8,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class DefaultRfidUhfReaderConnAdapter implements RfidUhfReaderConnAdapter {
+public class RfidUhfReaderConnAdapterImpl implements RfidUhfReaderConnAdapter {
     private String port;
     private SerialPort serialPort;
 
 
-    public DefaultRfidUhfReaderConnAdapter(@NotNull String port) {
+    public RfidUhfReaderConnAdapterImpl(@NotNull String port) {
         this.port = port;
     }
 
     @Override
     public void connect() throws Exception {
         CommPortIdentifier commPortIdentifier = CommPortIdentifier.getPortIdentifier(port);
-        this.serialPort = (SerialPort) commPortIdentifier.open("DefaultRfidUhfReaderConnAdapter", 0);
+        this.serialPort = (SerialPort) commPortIdentifier.open("RfidUhfReaderConnAdapterImpl", 0);
     }
 
     @Override

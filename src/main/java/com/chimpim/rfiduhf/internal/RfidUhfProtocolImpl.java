@@ -738,7 +738,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     public Result<Byte> queryIdCount(byte[] resp) throws RespException {
         // 0x0B	address	0x03 0x00 count cc
         checkBasicResp(resp);
-        return new Result<>(resp[3], resp[1], resp[4]);
+        return Result.of(resp, resp[4]);
     }
 
     @NotNull
