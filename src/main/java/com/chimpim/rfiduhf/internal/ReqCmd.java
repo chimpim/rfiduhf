@@ -19,8 +19,7 @@ interface ReqCmd {
 
     @NotNull
     byte[] getWorkAntenna(byte readerAddr);
-
-
+    
     @NotNull
     byte[] setRf(byte readerAddr, byte power, byte freq);
 

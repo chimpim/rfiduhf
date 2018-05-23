@@ -85,7 +85,9 @@ public class RfidUhfReaderApiTest {
 
     @Test
     public void setWorkMode() throws Exception {
-        logger.info(mRfidUhfReaderApi.setWorkMode(RfidUhfConstant.WORK_MODE_TRIGGER).toString());
+        logger.info(mRfidUhfReaderApi.setWorkMode(RfidUhfConstant.WORK_MODE_COMMAND).toString());
+        // 重置读卡器设置生效
+        logger.info(mRfidUhfReaderApi.resetReader().toString());
     }
 
     @Test

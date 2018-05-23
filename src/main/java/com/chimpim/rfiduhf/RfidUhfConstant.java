@@ -136,5 +136,22 @@ public final class RfidUhfConstant {
      * 永远锁
      */
     public static final byte CONTROL_FOREVER_LOCK = (byte) 0x11;
+    /**
+     * 中国标准
+     */
+    public static final byte FREQ_CHINA = (byte) 0x00;
+    /**
+     * 北美标准
+     */
+    public static final byte FREQ_AMERICA = (byte) 0x01;
+    /**
+     * 欧洲标准
+     */
+    public static final byte FREQ_EUROPE = (byte) 0x02;
+    /**
+     * 其他标准
+     */
+    public static final byte FREQ_OTHER = (byte) 0x03;
+
 
 }

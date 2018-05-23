@@ -107,8 +107,12 @@ public interface RfidUhfReaderApi {
     /**
      * 设置功率和频率
      *
-     * @param power 功率
+     * @param power 功率，0x00~0x1E
      * @param freq  频率
+     *              {@link RfidUhfConstant#FREQ_CHINA}
+     *              {@link RfidUhfConstant#FREQ_AMERICA}
+     *              {@link RfidUhfConstant#FREQ_EUROPE}
+     *              {@link RfidUhfConstant#FREQ_EUROPE}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
