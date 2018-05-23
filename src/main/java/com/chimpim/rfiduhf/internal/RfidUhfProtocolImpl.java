@@ -12,7 +12,6 @@ import static com.chimpim.rfiduhf.RfidUhfConstant.RESP_HEAD;
 
 public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
-
     @NotNull
     @Override
     public byte[] setBaudRate(byte readerAddr, byte baudRate) {
@@ -62,7 +61,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @NotNull
     @Override
     public byte[] setWorkMode(byte readerAddr, byte workMode) {
-        // 0A address 04 23 70 00 60
+        // 0A address 04 23 70 workMode 60
         byte[] cmd = new byte[]{
                 REQ_HEAD,
                 readerAddr,
@@ -91,6 +90,40 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         cmd[cmd.length - 1] = checkCode(cmd);
         return cmd;
     }
+
+    @NotNull
+    @Override
+    public byte[] setAddr(byte readerAddr, byte newReaderAddr) {
+        // 0A address 04 23 64 newReaderAddr 60
+        byte[] cmd = new byte[]{
+                REQ_HEAD,
+                readerAddr,
+                (byte) 0x04, // len
+                (byte) 0x23, // cmd
+                (byte) 0x64, // Register address
+                newReaderAddr,
+                (byte) 0x00, // cc
+        };
+        cmd[cmd.length - 1] = checkCode(cmd);
+        return cmd;
+    }
+
+    @NotNull
+    @Override
+    public byte[] getAddr(byte readerAddr) {
+        // 0A address 03 24 64 60
+        byte[] cmd = new byte[]{
+                REQ_HEAD,
+                readerAddr,
+                (byte) 0x03, // len
+                (byte) 0x24, // cmd
+                (byte) 0x64, // Register address
+                (byte) 0x00, // cc
+        };
+        cmd[cmd.length - 1] = checkCode(cmd);
+        return cmd;
+    }
+
 
     @NotNull
     @Override
@@ -558,6 +591,19 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
     @Override
     public Result<Byte> getWorkMode(byte[] resp) throws RespException {
         // 0B address len 00 workMode F4
+        return obtionByteResp(resp);
+    }
+
+    @NotNull
+    @Override
+    public Result<Void> setAddr(byte[] resp) throws RespException {
+        return obtionNonDataResp(resp);
+    }
+
+    @NotNull
+    @Override
+    public Result<Byte> getAddr(byte[] resp) throws RespException {
+        // 0B address len 00 addr F4
         return obtionByteResp(resp);
     }
 

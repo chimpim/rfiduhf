@@ -110,6 +110,26 @@ class RfidUhfReaderApiImpl implements RfidUhfReaderApi {
         return mProtocol.setWorkMode(resp);
     }
 
+    @Override
+    public Result<Byte> getAddr() throws IOException, RespException {
+        byte[] cmd = mProtocol.getAddr(mReaderAddr);
+        logger.info("cmd: " + HexStringUtil.bytesToHexString(cmd));
+        mReader.write(cmd);
+        byte[] resp = mReader.readResponse();
+        logger.info("resp: " + HexStringUtil.bytesToHexString(resp));
+        return mProtocol.getAddr(resp);
+    }
+
+    @Override
+    public Result<Void> setAddr(byte newReaderAddr) throws IOException, RespException {
+        byte[] cmd = mProtocol.setAddr(mReaderAddr, newReaderAddr);
+        logger.info("cmd: " + HexStringUtil.bytesToHexString(cmd));
+        mReader.write(cmd);
+        byte[] resp = mReader.readResponse();
+        logger.info("resp: " + HexStringUtil.bytesToHexString(resp));
+        return mProtocol.setAddr(resp);
+    }
+
 
     @Override
     public Result<Void> setRf(byte power, byte freq) throws IOException, RespException {

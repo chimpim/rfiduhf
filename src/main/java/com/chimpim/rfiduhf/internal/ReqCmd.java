@@ -19,19 +19,24 @@ interface ReqCmd {
 
     @NotNull
     byte[] getWorkAntenna(byte readerAddr);
-    
+
     @NotNull
     byte[] setRf(byte readerAddr, byte power, byte freq);
 
     @NotNull
     byte[] getRf(byte readerAddr);
 
-
     @NotNull
     byte[] setWorkMode(byte readerAddr, byte workMode);
 
     @NotNull
     byte[] getWorkMode(byte readerAddr);
+
+    @NotNull
+    byte[] setAddr(byte readerAddr, byte newReaderAddr);
+
+    @NotNull
+    byte[] getAddr(byte readerAddr);
 
     // =========================== 6B标签操作命令 =========================== //
     @NotNull

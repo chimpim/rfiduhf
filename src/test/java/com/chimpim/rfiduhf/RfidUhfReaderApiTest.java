@@ -95,6 +95,18 @@ public class RfidUhfReaderApiTest {
         logger.info(mRfidUhfReaderApi.getWorkMode().toString());
     }
 
+    @Test
+    public void setAddr() throws Exception {
+        logger.info(mRfidUhfReaderApi.setAddr((byte) 0xF1).toString());
+        // 重置读卡器设置生效
+        logger.info(mRfidUhfReaderApi.resetReader().toString());
+    }
+
+    @Test
+    public void getAddr() throws Exception {
+        logger.info(mRfidUhfReaderApi.getAddr().toString());
+    }
+
 
     @Test
     public void multiTagIdentify6b() throws Exception {

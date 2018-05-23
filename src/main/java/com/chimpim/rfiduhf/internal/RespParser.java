@@ -37,6 +37,12 @@ interface RespParser {
     @NotNull
     Result<Byte> getWorkMode(byte[] resp) throws RespException;
 
+    @NotNull
+    Result<Void> setAddr(byte[] resp) throws RespException;
+
+    @NotNull
+    Result<Byte> getAddr(byte[] resp) throws RespException;
+
     // =========================== 6B标签操作命令 =========================== //
     @NotNull
     Result<Byte> multiTagIdentify6b(byte[] resp) throws RespException;

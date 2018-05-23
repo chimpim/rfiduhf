@@ -105,6 +105,24 @@ public interface RfidUhfReaderApi {
     Result<Void> setWorkMode(byte workMode) throws IOException, RespException;
 
     /**
+     * 获取读写器工作模式
+     *
+     * @return 带有读写器工作模式负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<Byte> getAddr() throws IOException, RespException;
+
+    /**
+     * @param newReaderAddr 读卡器地址，0~253
+     * @return 无负载数据的结果
+     * @throws IOException   读卡器IO异常
+     * @throws RespException 响应异常
+     */
+    Result<Void> setAddr(byte newReaderAddr) throws IOException, RespException;
+
+
+    /**
      * 设置功率和频率
      *
      * @param power 功率，0x00~0x1E
