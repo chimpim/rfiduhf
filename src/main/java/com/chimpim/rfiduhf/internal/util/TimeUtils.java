@@ -1,10 +1,10 @@
-package com.chimpim.rfiduhf.util;
+package com.chimpim.rfiduhf.internal.util;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.TimeUnit;
 
-public class TimeUtil {
+public class TimeUtils {
 
     // 休眠
     public static void sleep(long milliseconds) {

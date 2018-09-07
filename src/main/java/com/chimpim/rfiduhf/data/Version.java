@@ -1,5 +1,8 @@
 package com.chimpim.rfiduhf.data;
 
+/**
+ * 读卡器固件版本号
+ */
 public class Version {
     private byte major;
     private byte minor;

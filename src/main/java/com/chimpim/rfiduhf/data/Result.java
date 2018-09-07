@@ -1,12 +1,11 @@
 package com.chimpim.rfiduhf.data;
 
-import com.chimpim.rfiduhf.RfidUhfConstant;
+import com.chimpim.rfiduhf.RFIDUHFConstants;
 
 public class Result<T> {
     private byte sc;
     private byte address;
     private T payload;
-
 
     public Result(byte sc, byte address, T payload) {
         this.sc = sc;
@@ -27,32 +26,32 @@ public class Result<T> {
     }
 
     public boolean isOk() {
-        return sc == RfidUhfConstant.SC_ERR_NONE;
+        return sc == RFIDUHFConstants.SC_ERR_NONE;
     }
 
     public String getScName() {
         switch (sc) {
-            case RfidUhfConstant.SC_ERR_NONE:
+            case RFIDUHFConstants.SC_ERR_NONE:
                 return "SC_ERR_NONE";
-            case RfidUhfConstant.SC_ERR_GENERAL_ERR:
+            case RFIDUHFConstants.SC_ERR_GENERAL_ERR:
                 return "SC_ERR_GENERAL_ERR";
-            case RfidUhfConstant.SC_ERR_PAR_SET_FAILED:
+            case RFIDUHFConstants.SC_ERR_PAR_SET_FAILED:
                 return "SC_ERR_PAR_SET_FAILED";
-            case RfidUhfConstant.SC_ERR_PAR_GET_FAILED:
+            case RFIDUHFConstants.SC_ERR_PAR_GET_FAILED:
                 return "SC_ERR_PAR_GET_FAILED";
-            case RfidUhfConstant.SC_ERR_NO_TAG:
+            case RFIDUHFConstants.SC_ERR_NO_TAG:
                 return "SC_ERR_NO_TAG";
-            case RfidUhfConstant.SC_ERR_READ_FAILED:
+            case RFIDUHFConstants.SC_ERR_READ_FAILED:
                 return "SC_ERR_READ_FAILED";
-            case RfidUhfConstant.SC_ERR_WRITE_FAILED:
+            case RFIDUHFConstants.SC_ERR_WRITE_FAILED:
                 return "SC_ERR_WRITE_FAILED";
-            case RfidUhfConstant.SC_ERR_LOCK_FAILED:
+            case RFIDUHFConstants.SC_ERR_LOCK_FAILED:
                 return "SC_ERR_LOCK_FAILED";
-            case RfidUhfConstant.SC_ERR_ERASE_FAILED:
+            case RFIDUHFConstants.SC_ERR_ERASE_FAILED:
                 return "SC_ERR_ERASE_FAILED";
-            case RfidUhfConstant.SC_ERR_CMD_ERR:
+            case RFIDUHFConstants.SC_ERR_CMD_ERR:
                 return "SC_ERR_CMD_ERR";
-            case RfidUhfConstant.SC_ERR_UNDEFINED:
+            case RFIDUHFConstants.SC_ERR_UNDEFINED:
                 return "SC_ERR_UNDEFINED";
             default:
                 return "UNKNOWN";

@@ -1,5 +1,8 @@
 package com.chimpim.rfiduhf.data;
 
+/**
+ * 功率和频率
+ */
 public class PowerAndFreq {
     private byte power;
     private byte freq;

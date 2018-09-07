@@ -1,7 +1,8 @@
 package com.chimpim.rfiduhf.internal;
 
-import com.chimpim.rfiduhf.RfidUhfReaderConnAdapter;
-import com.chimpim.rfiduhf.util.TimeUtil;
+import com.chimpim.rfiduhf.RFIDUHFReader;
+import com.chimpim.rfiduhf.RFIDUHFReaderConnAdapter;
+import com.chimpim.rfiduhf.internal.util.TimeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -9,8 +10,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class RfidUhfReader {
-    private RfidUhfReaderConnAdapter mConnectionAdapter;
+public abstract class AbstractRFIDUHFReader implements RFIDUHFReader {
+    private RFIDUHFReaderConnAdapter mConnectionAdapter;
     @Nullable
     private InputStream mInputStream;
     @Nullable
@@ -18,7 +19,9 @@ public class RfidUhfReader {
     private final int readResponseInterval;
     private final int readResponseCount;
 
-    public RfidUhfReader(@NotNull RfidUhfReaderConnAdapter adapter, int readResponseInterval, int readResponseCount) {
+    public AbstractRFIDUHFReader(@NotNull RFIDUHFReaderConnAdapter adapter,
+                                 int readResponseInterval,
+                                 int readResponseCount) {
         this.mConnectionAdapter = adapter;
         this.readResponseInterval = readResponseInterval;
         this.readResponseCount = readResponseCount;
@@ -38,12 +41,12 @@ public class RfidUhfReader {
         mConnectionAdapter.disconnect();
     }
 
-    public void write(@NotNull byte[] cmd) throws IOException {
+    protected void write(@NotNull byte[] cmd) throws IOException {
         writeAndFlush(cmd);
     }
 
     @Nullable
-    public byte[] readResponse() throws IOException {
+    protected byte[] readResponse() throws IOException {
         return readResponse(readResponseInterval, readResponseCount);
     }
 
@@ -63,7 +66,7 @@ public class RfidUhfReader {
             available = mInputStream.available();
             // 时间超时
             if (counter > count) return null;
-            else TimeUtil.sleep(interval);
+            else TimeUtils.sleep(interval);
             counter++;
         }
         // 读取前三个字节
@@ -85,4 +88,5 @@ public class RfidUhfReader {
         System.arraycopy(buf2, 0, returnBytes, buf.length, buf2.length);
         return returnBytes;
     }
+
 }

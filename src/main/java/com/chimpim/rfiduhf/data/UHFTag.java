@@ -1,10 +1,13 @@
 package com.chimpim.rfiduhf.data;
 
-import com.chimpim.rfiduhf.util.HexStringUtil;
+import com.chimpim.rfiduhf.internal.util.HexStringUtils;
 
 import java.util.Arrays;
 
-public class UhfTag {
+/**
+ * UHF标签
+ */
+public class UHFTag {
     public static final byte TYPE_ISO_6B = (byte) 0x01;
     public static final byte TYPE_GEN2_6C = (byte) 0x04;
 
@@ -14,7 +17,7 @@ public class UhfTag {
 
     private byte[] data;
 
-    public UhfTag(byte type, byte ant, byte[] data) {
+    public UHFTag(byte type, byte ant, byte[] data) {
         this.type = type;
         this.ant = ant;
         this.data = data;
@@ -45,12 +48,12 @@ public class UhfTag {
 
     @Override
     public String toString() {
-        return "UhfTag{" +
+        return "UHFTag{" +
                 "type=" + (0xFF & type) +
                 ", typeName=" + getTypeName() +
                 ", ant=" + (0xFF & ant) +
                 ", data=" + Arrays.toString(data) +
-                ", hexData=" + HexStringUtil.bytesToHexString(data) +
+                ", hexData=" + HexStringUtils.bytesToHexString(data) +
                 '}';
     }
 }

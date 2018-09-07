@@ -2,15 +2,14 @@ package com.chimpim.rfiduhf;
 
 import com.chimpim.rfiduhf.data.PowerAndFreq;
 import com.chimpim.rfiduhf.data.Result;
-import com.chimpim.rfiduhf.data.UhfTag;
+import com.chimpim.rfiduhf.data.UHFTag;
 import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.RespException;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public interface RfidUhfReaderApi {
-
+public interface RFIDUHFReader {
     /**
      * 连接读写器
      *
@@ -36,11 +35,11 @@ public interface RfidUhfReaderApi {
      * 设置读写器波特率
      *
      * @param baudRate 波特率
-     *                 {@link RfidUhfConstant#BAUD_RATE_9600}
-     *                 {@link RfidUhfConstant#BAUD_RATE_19200}
-     *                 {@link RfidUhfConstant#BAUD_RATE_38400}
-     *                 {@link RfidUhfConstant#BAUD_RATE_57600}
-     *                 {@link RfidUhfConstant#BAUD_RATE_115200}
+     *                 {@link RFIDUHFConstants#BAUD_RATE_9600}
+     *                 {@link RFIDUHFConstants#BAUD_RATE_19200}
+     *                 {@link RFIDUHFConstants#BAUD_RATE_38400}
+     *                 {@link RFIDUHFConstants#BAUD_RATE_57600}
+     *                 {@link RFIDUHFConstants#BAUD_RATE_115200}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -95,9 +94,9 @@ public interface RfidUhfReaderApi {
 
     /**
      * @param workMode 工作模式
-     *                 {@link RfidUhfConstant#WORK_MODE_COMMAND}
-     *                 {@link RfidUhfConstant#WORK_MODE_TIMEING}
-     *                 {@link RfidUhfConstant#WORK_MODE_TRIGGER}
+     *                 {@link RFIDUHFConstants#WORK_MODE_COMMAND}
+     *                 {@link RFIDUHFConstants#WORK_MODE_TIMEING}
+     *                 {@link RFIDUHFConstants#WORK_MODE_TRIGGER}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -127,10 +126,10 @@ public interface RfidUhfReaderApi {
      *
      * @param power 功率，0x00~0x1E
      * @param freq  频率
-     *              {@link RfidUhfConstant#FREQ_CHINA}
-     *              {@link RfidUhfConstant#FREQ_AMERICA}
-     *              {@link RfidUhfConstant#FREQ_EUROPE}
-     *              {@link RfidUhfConstant#FREQ_EUROPE}
+     *              {@link RFIDUHFConstants#FREQ_CHINA}
+     *              {@link RFIDUHFConstants#FREQ_AMERICA}
+     *              {@link RFIDUHFConstants#FREQ_EUROPE}
+     *              {@link RFIDUHFConstants#FREQ_EUROPE}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -150,7 +149,7 @@ public interface RfidUhfReaderApi {
     //======================== 6B标签 ========================//
 
     /**
-     * 6B多标签识别，使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()}
+     * 6B多标签识别，使用前先调用{@link RFIDUHFReader#clearIdBuffer()}
      *
      * @return 带有识别到的标签数量负载数据的结果
      * @throws IOException   读卡器IO异常
@@ -159,7 +158,7 @@ public interface RfidUhfReaderApi {
     Result<Byte> multiTagIdentify6b() throws IOException, RespException;
 
     /**
-     * 6B多标签读取,使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()} ()}
+     * 6B多标签读取,使用前先调用{@link RFIDUHFReader#clearIdBuffer()} ()}
      *
      * @param startAddr 标签开始地址
      * @return 带有读到标签数量负载数据的结果
@@ -188,7 +187,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> readWithUid6b(byte[] uid, byte addr) throws IOException, RespException;
+    Result<UHFTag> readWithUid6b(byte[] uid, byte addr) throws IOException, RespException;
 
     /**
      * 将数据写入特定UID的6B标签
@@ -241,12 +240,12 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> singleTagRead6b(byte addr) throws IOException, RespException;
+    Result<UHFTag> singleTagRead6b(byte addr) throws IOException, RespException;
 
     //======================== 6C标签 ========================//
 
     /**
-     * 6C多标签识别，使用前先调用{@link RfidUhfReaderApi#clearIdBuffer()} ()}
+     * 6C多标签识别，使用前先调用{@link RFIDUHFReader#clearIdBuffer()} ()}
      *
      * @return 带有读到标签数量负载数据的结果
      * @throws IOException   读卡器IO异常
@@ -269,7 +268,7 @@ public interface RfidUhfReaderApi {
      * 锁定6C卡特定的标签区域
      *
      * @param memBank 标签区域
-     * @param control 控制位，值可以是{@link RfidUhfConstant#CONTROL_NOT_LOCK,RfidUhfConstant#CONTROL_NEVER_LOCK,RfidUhfConstant#CONTROL_FOREVER_LOCK,RfidUhfConstant#CONTROL_SAFETY_LOCK}
+     * @param control 控制位，值可以是{@link RFIDUHFConstants#CONTROL_NOT_LOCK, RFIDUHFConstants#CONTROL_NEVER_LOCK, RFIDUHFConstants#CONTROL_FOREVER_LOCK, RFIDUHFConstants#CONTROL_SAFETY_LOCK}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -306,7 +305,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> read6c(byte memBank, byte addr, byte len) throws IOException, RespException;
+    Result<UHFTag> read6c(byte memBank, byte addr, byte len) throws IOException, RespException;
 
     /**
      * 将数据写入6C标签的特定区域
@@ -331,7 +330,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag[]> getIdAndDelete(byte count) throws IOException, RespException;
+    Result<UHFTag[]> getIdAndDelete(byte count) throws IOException, RespException;
 
     /**
      * 从缓存中取标签数据命令，取完后保留数据
@@ -340,7 +339,7 @@ public interface RfidUhfReaderApi {
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
      */
-    Result<UhfTag> getId() throws IOException, RespException;
+    Result<UHFTag> getId() throws IOException, RespException;
 
     /**
      * 数据取出成功的反馈，读写器收到此命令后，删除之前所传的数据
@@ -375,12 +374,12 @@ public interface RfidUhfReaderApi {
 
     boolean fastBatchWrite6b(byte startAddr, @NotNull byte[] values) throws IOException, RespException;
 
-    UhfTag[] fastMultiTagRead6b(byte startAddr) throws IOException, RespException;
+    UHFTag[] fastMultiTagRead6b(byte startAddr) throws IOException, RespException;
 
-    UhfTag[] fastMultiTagIdentify6b() throws IOException, RespException;
+    UHFTag[] fastMultiTagIdentify6b() throws IOException, RespException;
 
     boolean fastBatchWrite6c(byte memBank, byte startAddr, @NotNull byte[] values) throws IOException, RespException;
 
-    UhfTag[] fastMultiTagIdentify6c() throws IOException, RespException;
+    UHFTag[] fastMultiTagIdentify6c() throws IOException, RespException;
 
 }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public interface RfidUhfReaderConnAdapter {
+public interface RFIDUHFReaderConnAdapter {
 
     void connect() throws Exception;
 

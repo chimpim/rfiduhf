@@ -2,15 +2,15 @@ package com.chimpim.rfiduhf.internal;
 
 import com.chimpim.rfiduhf.data.PowerAndFreq;
 import com.chimpim.rfiduhf.data.Result;
-import com.chimpim.rfiduhf.data.UhfTag;
+import com.chimpim.rfiduhf.data.UHFTag;
 import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.*;
 import org.jetbrains.annotations.NotNull;
 
-import static com.chimpim.rfiduhf.RfidUhfConstant.REQ_HEAD;
-import static com.chimpim.rfiduhf.RfidUhfConstant.RESP_HEAD;
+import static com.chimpim.rfiduhf.RFIDUHFConstants.REQ_HEAD;
+import static com.chimpim.rfiduhf.RFIDUHFConstants.RESP_HEAD;
 
-public class RfidUhfProtocolImpl implements RfidUhfProtocol {
+public class RFIDUHFProtocolImpl implements RFIDUHFProtocol {
 
     @NotNull
     @Override
@@ -630,12 +630,12 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public Result<UhfTag> readWithUid6b(byte[] resp) throws RespException {
+    public Result<UHFTag> readWithUid6b(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[8];
         System.arraycopy(resp, 5, bytes, 0, bytes.length);
-        return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], bytes));
+        return newResult(resp, new UHFTag(UHFTag.TYPE_ISO_6B, resp[4], bytes));
     }
 
     @NotNull
@@ -672,7 +672,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public Result<UhfTag> singleTagRead6b(byte[] resp) throws RespException {
+    public Result<UHFTag> singleTagRead6b(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
@@ -681,7 +681,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         }
         byte[] data = new byte[dataLen];
         System.arraycopy(resp, 5, data, 0, data.length);
-        return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], data));
+        return newResult(resp, new UHFTag(UHFTag.TYPE_ISO_6B, resp[4], data));
     }
 
     @NotNull
@@ -717,7 +717,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public Result<UhfTag> read6c(byte[] resp) throws RespException {
+    public Result<UHFTag> read6c(byte[] resp) throws RespException {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         int dataLen = resp[2] - 3;
@@ -726,7 +726,7 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         }
         byte[] data = new byte[dataLen];
         System.arraycopy(resp, 5, data, 0, data.length);
-        return newResult(resp, new UhfTag(UhfTag.TYPE_GEN2_6C, resp[4], data));
+        return newResult(resp, new UHFTag(UHFTag.TYPE_GEN2_6C, resp[4], data));
     }
 
     @NotNull
@@ -737,11 +737,11 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public Result<UhfTag[]> getIdAndDelete(byte[] resp) throws RespException {
+    public Result<UHFTag[]> getIdAndDelete(byte[] resp) throws RespException {
         // 0x0B address 14*n+3 0x00 count data(14*n) cc
         checkBasicResp(resp);
         int n = (resp[2] - 3) / 14;
-        UhfTag[] uhfTags = new UhfTag[resp[4]];
+        UHFTag[] uhfTags = new UHFTag[resp[4]];
         byte[] data = new byte[14 * n];
         System.arraycopy(resp, 5, data, 0, data.length);
         for (int i = 0; i < uhfTags.length; i++) {
@@ -754,12 +754,12 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
 
     @NotNull
     @Override
-    public Result<UhfTag> getId(byte[] resp) throws RespException {
+    public Result<UHFTag> getId(byte[] resp) throws RespException {
         // 0x0B address 17 0x00 data(14) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[14];
         System.arraycopy(resp, 0, bytes, 0, 14);
-        UhfTag uhfTag = newUhfTagOf14bytes(bytes);
+        UHFTag uhfTag = newUhfTagOf14bytes(bytes);
         return new Result<>(resp[3], resp[1], uhfTag);
     }
 
@@ -837,10 +837,10 @@ public class RfidUhfProtocolImpl implements RfidUhfProtocol {
         return (byte) (0xFF & (~sum + 1));
     }
 
-    private static UhfTag newUhfTagOf14bytes(@NotNull byte[] bytes) {
+    private static UHFTag newUhfTagOf14bytes(@NotNull byte[] bytes) {
         byte[] data = new byte[12];
         System.arraycopy(bytes, 2, data, 0, 12);
-        return new UhfTag(bytes[0], bytes[1], data);
+        return new UHFTag(bytes[0], bytes[1], data);
     }
 
     private static <T> Result<T> newResult(byte[] resp, T payload) {

@@ -1,6 +1,6 @@
-package com.chimpim.rfiduhf.util;
+package com.chimpim.rfiduhf.internal.util;
 
-public class HexStringUtil {
+public class HexStringUtils {
 
 
     public static String bytesToHexString(byte[] bytes) {
@@ -15,6 +15,7 @@ public class HexStringUtil {
         }
         return strBuilder.toString();
     }
+
 
     public static byte[] hexStringToBytes(String hexString) {
         if (hexString == null) return new byte[0];

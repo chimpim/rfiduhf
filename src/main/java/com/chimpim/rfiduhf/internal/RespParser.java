@@ -2,10 +2,12 @@ package com.chimpim.rfiduhf.internal;
 
 import com.chimpim.rfiduhf.data.PowerAndFreq;
 import com.chimpim.rfiduhf.data.Result;
-import com.chimpim.rfiduhf.data.UhfTag;
+import com.chimpim.rfiduhf.data.UHFTag;
 import com.chimpim.rfiduhf.data.Version;
 import com.chimpim.rfiduhf.exception.RespException;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 
 interface RespParser {
 
@@ -54,7 +56,7 @@ interface RespParser {
     Result<Void> write6b(byte[] resp) throws RespException;
 
     @NotNull
-    Result<UhfTag> readWithUid6b(byte[] resp) throws RespException;
+    Result<UHFTag> readWithUid6b(byte[] resp) throws RespException;
 
     @NotNull
     Result<Void> writeWithUid6b(byte[] resp) throws RespException;
@@ -69,7 +71,7 @@ interface RespParser {
     Result<Void> blockWrite6b(byte[] resp) throws RespException;
 
     @NotNull
-    Result<UhfTag> singleTagRead6b(byte[] resp) throws RespException;
+    Result<UHFTag> singleTagRead6b(byte[] resp) throws RespException;
 
     // =========================== 6C标签操作命令 =========================== //
     @NotNull
@@ -88,17 +90,17 @@ interface RespParser {
     Result<Void> init6c(byte[] resp) throws RespException;
 
     @NotNull
-    Result<UhfTag> read6c(byte[] resp) throws RespException;
+    Result<UHFTag> read6c(byte[] resp) throws RespException;
 
     @NotNull
     Result<Void> write6c(byte[] resp) throws RespException;
 
     // =========================== 缓存管理命令 =========================== //
     @NotNull
-    Result<UhfTag[]> getIdAndDelete(byte[] resp) throws RespException;
+    Result<UHFTag[]> getIdAndDelete(byte[] resp) throws RespException;
 
     @NotNull
-    Result<UhfTag> getId(byte[] resp) throws RespException;
+    Result<UHFTag> getId(byte[] resp) throws RespException;
 
     @NotNull
     Result getIdAck(byte[] resp) throws RespException;

@@ -1,6 +1,6 @@
 package com.chimpim.rfiduhf;
 
-public final class RfidUhfConstant {
+public final class RFIDUHFConstants {
     /**
      * 请求头
      */
@@ -153,5 +153,37 @@ public final class RfidUhfConstant {
      */
     public static final byte FREQ_OTHER = (byte) 0x03;
 
-
+    /**
+     * 功率
+     */
+    public static final byte POWER_1 = (byte) 0x01;
+    public static final byte POWER_2 = (byte) 0x02;
+    public static final byte POWER_3 = (byte) 0x03;
+    public static final byte POWER_4 = (byte) 0x04;
+    public static final byte POWER_5 = (byte) 0x05;
+    public static final byte POWER_6 = (byte) 0x06;
+    public static final byte POWER_7 = (byte) 0x07;
+    public static final byte POWER_8 = (byte) 0x08;
+    public static final byte POWER_9 = (byte) 0x09;
+    public static final byte POWER_10 = (byte) 0x0A;
+    public static final byte POWER_11 = (byte) 0x0B;
+    public static final byte POWER_12 = (byte) 0x0C;
+    public static final byte POWER_13 = (byte) 0x0D;
+    public static final byte POWER_14 = (byte) 0x0E;
+    public static final byte POWER_15 = (byte) 0x0F;
+    public static final byte POWER_16 = (byte) 0x10;
+    public static final byte POWER_17 = (byte) 0x11;
+    public static final byte POWER_18 = (byte) 0x12;
+    public static final byte POWER_19 = (byte) 0x13;
+    public static final byte POWER_20 = (byte) 0x14;
+    public static final byte POWER_21 = (byte) 0x15;
+    public static final byte POWER_22 = (byte) 0x16;
+    public static final byte POWER_23 = (byte) 0x17;
+    public static final byte POWER_24 = (byte) 0x18;
+    public static final byte POWER_25 = (byte) 0x19;
+    public static final byte POWER_26 = (byte) 0x1A;
+    public static final byte POWER_27 = (byte) 0x1B;
+    public static final byte POWER_28 = (byte) 0x1C;
+    public static final byte POWER_29 = (byte) 0x1D;
+    public static final byte POWER_30 = (byte) 0x1E;
 }
