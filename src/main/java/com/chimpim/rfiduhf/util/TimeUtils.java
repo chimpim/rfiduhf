@@ -1,4 +1,4 @@
-package com.chimpim.rfiduhf.internal.util;
+package com.chimpim.rfiduhf.util;
 
 import org.jetbrains.annotations.NotNull;
 

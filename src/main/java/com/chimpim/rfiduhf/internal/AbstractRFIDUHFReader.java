@@ -2,7 +2,7 @@ package com.chimpim.rfiduhf.internal;
 
 import com.chimpim.rfiduhf.RFIDUHFReader;
 import com.chimpim.rfiduhf.RFIDUHFReaderConnAdapter;
-import com.chimpim.rfiduhf.internal.util.TimeUtils;
+import com.chimpim.rfiduhf.util.TimeUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,6 +1,6 @@
 package com.chimpim.rfiduhf.data;
 
-import com.chimpim.rfiduhf.internal.util.HexStringUtils;
+import com.chimpim.rfiduhf.util.HexStringUtils;
 
 import java.util.Arrays;
 

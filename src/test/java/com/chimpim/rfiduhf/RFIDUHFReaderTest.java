@@ -21,7 +21,9 @@ public class RFIDUHFReaderTest {
     @Before
     public void setUp() throws Exception {
         RFIDUHFReaderConnAdapter adapter = new RFIDUHFReaderConnAdapterImpl(port);
-        mRFIDUHFReader = RFIDUHFReaderFactory.createRFIDUHFReader(adapter);
+
+        mRFIDUHFReader = new RFIDUHFReaderBuilder(adapter)
+                .build();
         mRFIDUHFReader.connect();
     }
 

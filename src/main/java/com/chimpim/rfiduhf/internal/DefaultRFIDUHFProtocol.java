@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.chimpim.rfiduhf.RFIDUHFConstants.REQ_HEAD;
 import static com.chimpim.rfiduhf.RFIDUHFConstants.RESP_HEAD;
 
-public class RFIDUHFProtocolImpl implements RFIDUHFProtocol {
+public class DefaultRFIDUHFProtocol implements RFIDUHFProtocol {
 
     @NotNull
     @Override
@@ -800,31 +800,27 @@ public class RFIDUHFProtocolImpl implements RFIDUHFProtocol {
         return newResult(resp, resp[4]);
     }
 
-    private static void checkBasicResp(byte[] resp) throws RespNullException, RespLenException, RespHeadException, RespScException {
+    private static void checkBasicResp(byte[] resp) throws RespException {
         if (resp == null) {
-            throw new RespNullException(null, "resp == null");
+            // 响应数据为空
+            throw new RespNullException(null, "响应数据为空。");
         }
-        final int minLen = 5;
-        if (resp.length < minLen) {
-            throw new RespLenException(resp,
-                    String.format("resp length: %d < %d", resp.length, minLen));
+        if (resp.length < 5) {
+            throw new RespLenException(resp, "响应数据长度小于5。");
         }
         int len = resp[2] + 3;
         if (resp.length != len) {
             // 数据长度错误
-            throw new RespLenException(resp,
-                    String.format("resp length: %d != %d", resp.length, len));
+            throw new RespLenException(resp, "数据长度错误。");
         }
         if (resp[0] != RESP_HEAD) {
             // 响应头错误
-            throw new RespHeadException(resp,
-                    String.format("%s != %s", resp[0], RESP_HEAD));
+            throw new RespHeadException(resp, "数据响应头错误。");
         }
         byte cc = checkCode(resp);
         if (resp[resp.length - 1] != cc) {
             // 数据校验码错误
-            throw new RespScException(resp,
-                    String.format("%s != %s", resp[0], cc));
+            throw new RespScException(resp, "数据校验码错误。");
         }
     }
 
