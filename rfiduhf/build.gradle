@@ -1,0 +1,16 @@
+apply plugin: 'java'
+
+
+group rootProject.group
+version rootProject.version
+
+sourceCompatibility = JavaVersion.VERSION_1_7
+
+dependencies {
+    compile 'org.jetbrains:annotations:13.0'
+
+    testImplementation fileTree(dir: 'testlibs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+}
+
+apply from: './publish.gradle'

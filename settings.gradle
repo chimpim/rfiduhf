@@ -1,2 +1,4 @@
-rootProject.name = 'rfiduhf'
+rootProject.name = 'rfiduhf-parent'
+
+include(":rfiduhf")
 
