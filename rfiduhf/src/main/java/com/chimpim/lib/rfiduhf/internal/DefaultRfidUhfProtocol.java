@@ -7,8 +7,8 @@ import com.chimpim.lib.rfiduhf.model.UhfTag;
 import com.chimpim.lib.rfiduhf.model.Version;
 import org.jetbrains.annotations.NotNull;
 
-import static com.chimpim.lib.rfiduhf.RFIDUHFConstants.REQ_HEAD;
-import static com.chimpim.lib.rfiduhf.RFIDUHFConstants.RESP_HEAD;
+import static com.chimpim.lib.rfiduhf.RfidUhfConstants.REQ_HEAD;
+import static com.chimpim.lib.rfiduhf.RfidUhfConstants.RESP_HEAD;
 
 public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
 

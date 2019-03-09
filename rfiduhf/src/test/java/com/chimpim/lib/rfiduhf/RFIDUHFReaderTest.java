@@ -52,7 +52,7 @@ public class RFIDUHFReaderTest {
 
     @Test
     public void setBaudRate() throws Exception {
-        logger.info(mRFIDUHFReader.setBaudRate(RFIDUHFConstants.BAUD_RATE_9600).toString());
+        logger.info(mRFIDUHFReader.setBaudRate(RfidUhfConstants.BAUD_RATE_9600).toString());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RFIDUHFReaderTest {
 
     @Test
     public void setRf() throws Exception {
-        logger.info(mRFIDUHFReader.setRf(RFIDUHFConstants.POWER_30, RFIDUHFConstants.FREQ_AMERICA).toString());
+        logger.info(mRFIDUHFReader.setRf(RfidUhfConstants.POWER_30, RfidUhfConstants.FREQ_AMERICA).toString());
 
     }
 
@@ -88,7 +88,7 @@ public class RFIDUHFReaderTest {
 
     @Test
     public void setWorkMode() throws Exception {
-        logger.info(mRFIDUHFReader.setWorkMode(RFIDUHFConstants.WORK_MODE_COMMAND).toString());
+        logger.info(mRFIDUHFReader.setWorkMode(RfidUhfConstants.WORK_MODE_COMMAND).toString());
         // 重置读卡器设置生效
         logger.info(mRFIDUHFReader.resetReader().toString());
     }
@@ -204,7 +204,7 @@ public class RFIDUHFReaderTest {
 
     @Test
     public void lock6c() throws Exception {
-        logger.info(mRFIDUHFReader.lock6c(RFIDUHFConstants.MEM_BANK_EPC, RFIDUHFConstants.CONTROL_NOT_LOCK).toString());
+        logger.info(mRFIDUHFReader.lock6c(RfidUhfConstants.MEM_BANK_EPC, RfidUhfConstants.CONTROL_NOT_LOCK).toString());
     }
 
     @Test
@@ -220,13 +220,13 @@ public class RFIDUHFReaderTest {
 
     @Test
     public void read6c() throws Exception {
-        logger.info(mRFIDUHFReader.read6c(RFIDUHFConstants.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
+        logger.info(mRFIDUHFReader.read6c(RfidUhfConstants.MEM_BANK_EPC, (byte) 2, (byte) 6).toString());
     }
 
     @Test
     public void write6c() throws Exception {
         byte[] value = new byte[]{0x01, 0x01};
-        logger.info(mRFIDUHFReader.write6c(RFIDUHFConstants.MEM_BANK_EPC, (byte) 4, value).toString());
+        logger.info(mRFIDUHFReader.write6c(RfidUhfConstants.MEM_BANK_EPC, (byte) 4, value).toString());
     }
 
     @Test
@@ -297,9 +297,9 @@ public class RFIDUHFReaderTest {
                 (byte) 0x05, (byte) 0x06, (byte) 0x07, (byte) 0x08,
                 (byte) 0x09, (byte) 0x0A, (byte) 0x0B, (byte) 0x0C,
         };
-        boolean result = mRFIDUHFReader.fastBatchWrite6c(RFIDUHFConstants.MEM_BANK_EPC, (byte) 2, epc);
+        boolean result = mRFIDUHFReader.fastBatchWrite6c(RfidUhfConstants.MEM_BANK_EPC, (byte) 2, epc);
         logger.info("result = " + result);
-        Result<UhfTag> uhfTagResult = mRFIDUHFReader.read6c(RFIDUHFConstants.MEM_BANK_EPC, (byte) 2, (byte) 6);
+        Result<UhfTag> uhfTagResult = mRFIDUHFReader.read6c(RfidUhfConstants.MEM_BANK_EPC, (byte) 2, (byte) 6);
         logger.info("result = " + uhfTagResult);
         UhfTag[] uhfTags = mRFIDUHFReader.fastMultiTagIdentify6c();
         logger.info(Arrays.toString(uhfTags));

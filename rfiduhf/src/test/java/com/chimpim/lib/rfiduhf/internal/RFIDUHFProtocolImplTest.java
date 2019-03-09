@@ -1,6 +1,6 @@
 package com.chimpim.lib.rfiduhf.internal;
 
-import com.chimpim.lib.rfiduhf.RFIDUHFConstants;
+import com.chimpim.lib.rfiduhf.RfidUhfConstants;
 import com.chimpim.lib.rfiduhf.util.HexStringUtils;
 import org.junit.Test;
 
@@ -18,7 +18,7 @@ public class RFIDUHFProtocolImplTest {
     @Test
     public void setWorkMode() {
         DefaultRfidUhfProtocol rfidUhfProtocol = new DefaultRfidUhfProtocol();
-        byte[] command = rfidUhfProtocol.setWorkMode((byte) 0xFF, RFIDUHFConstants.WORK_MODE_COMMAND);
+        byte[] command = rfidUhfProtocol.setWorkMode((byte) 0xFF, RfidUhfConstants.WORK_MODE_COMMAND);
         System.out.println(HexStringUtils.bytesToHexString(command));
         System.out.println(Arrays.toString(HexStringUtils.hexStringToBytes(HexStringUtils.bytesToHexString(command))));
     }

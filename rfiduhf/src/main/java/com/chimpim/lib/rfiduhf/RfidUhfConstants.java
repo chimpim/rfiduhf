@@ -1,6 +1,6 @@
 package com.chimpim.lib.rfiduhf;
 
-public final class RFIDUHFConstants {
+public final class RfidUhfConstants {
     /**
      * 请求头
      */

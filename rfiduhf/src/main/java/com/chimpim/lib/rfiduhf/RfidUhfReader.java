@@ -35,11 +35,11 @@ public interface RfidUhfReader {
      * 设置读写器波特率
      *
      * @param baudRate 波特率
-     *                 {@link RFIDUHFConstants#BAUD_RATE_9600}
-     *                 {@link RFIDUHFConstants#BAUD_RATE_19200}
-     *                 {@link RFIDUHFConstants#BAUD_RATE_38400}
-     *                 {@link RFIDUHFConstants#BAUD_RATE_57600}
-     *                 {@link RFIDUHFConstants#BAUD_RATE_115200}
+     *                 {@link RfidUhfConstants#BAUD_RATE_9600}
+     *                 {@link RfidUhfConstants#BAUD_RATE_19200}
+     *                 {@link RfidUhfConstants#BAUD_RATE_38400}
+     *                 {@link RfidUhfConstants#BAUD_RATE_57600}
+     *                 {@link RfidUhfConstants#BAUD_RATE_115200}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -94,9 +94,9 @@ public interface RfidUhfReader {
 
     /**
      * @param workMode 工作模式
-     *                 {@link RFIDUHFConstants#WORK_MODE_COMMAND}
-     *                 {@link RFIDUHFConstants#WORK_MODE_TIMEING}
-     *                 {@link RFIDUHFConstants#WORK_MODE_TRIGGER}
+     *                 {@link RfidUhfConstants#WORK_MODE_COMMAND}
+     *                 {@link RfidUhfConstants#WORK_MODE_TIMEING}
+     *                 {@link RfidUhfConstants#WORK_MODE_TRIGGER}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -126,10 +126,10 @@ public interface RfidUhfReader {
      *
      * @param power 功率，0x00~0x1E
      * @param freq  频率
-     *              {@link RFIDUHFConstants#FREQ_CHINA}
-     *              {@link RFIDUHFConstants#FREQ_AMERICA}
-     *              {@link RFIDUHFConstants#FREQ_EUROPE}
-     *              {@link RFIDUHFConstants#FREQ_EUROPE}
+     *              {@link RfidUhfConstants#FREQ_CHINA}
+     *              {@link RfidUhfConstants#FREQ_AMERICA}
+     *              {@link RfidUhfConstants#FREQ_EUROPE}
+     *              {@link RfidUhfConstants#FREQ_EUROPE}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常
@@ -269,10 +269,10 @@ public interface RfidUhfReader {
      *
      * @param memBank 标签区域
      * @param control 控制位，值可以是
-     *                {@link RFIDUHFConstants#CONTROL_NOT_LOCK}
-     *                {@link RFIDUHFConstants#CONTROL_NEVER_LOCK}
-     *                {@link RFIDUHFConstants#CONTROL_FOREVER_LOCK}
-     *                {@link RFIDUHFConstants#CONTROL_SAFETY_LOCK}
+     *                {@link RfidUhfConstants#CONTROL_NOT_LOCK}
+     *                {@link RfidUhfConstants#CONTROL_NEVER_LOCK}
+     *                {@link RfidUhfConstants#CONTROL_FOREVER_LOCK}
+     *                {@link RfidUhfConstants#CONTROL_SAFETY_LOCK}
      * @return 无负载数据的结果
      * @throws IOException   读卡器IO异常
      * @throws RespException 响应异常

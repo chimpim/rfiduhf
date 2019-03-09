@@ -1,6 +1,6 @@
 package com.chimpim.lib.rfiduhf.model;
 
-import com.chimpim.lib.rfiduhf.RFIDUHFConstants;
+import com.chimpim.lib.rfiduhf.RfidUhfConstants;
 
 public class Result<T> {
     private byte sc;
@@ -26,32 +26,32 @@ public class Result<T> {
     }
 
     public boolean isError() {
-        return sc != RFIDUHFConstants.SC_ERR_NONE;
+        return sc != RfidUhfConstants.SC_ERR_NONE;
     }
 
     public String getScName() {
         switch (sc) {
-            case RFIDUHFConstants.SC_ERR_NONE:
+            case RfidUhfConstants.SC_ERR_NONE:
                 return "SC_ERR_NONE";
-            case RFIDUHFConstants.SC_ERR_GENERAL_ERR:
+            case RfidUhfConstants.SC_ERR_GENERAL_ERR:
                 return "SC_ERR_GENERAL_ERR";
-            case RFIDUHFConstants.SC_ERR_PAR_SET_FAILED:
+            case RfidUhfConstants.SC_ERR_PAR_SET_FAILED:
                 return "SC_ERR_PAR_SET_FAILED";
-            case RFIDUHFConstants.SC_ERR_PAR_GET_FAILED:
+            case RfidUhfConstants.SC_ERR_PAR_GET_FAILED:
                 return "SC_ERR_PAR_GET_FAILED";
-            case RFIDUHFConstants.SC_ERR_NO_TAG:
+            case RfidUhfConstants.SC_ERR_NO_TAG:
                 return "SC_ERR_NO_TAG";
-            case RFIDUHFConstants.SC_ERR_READ_FAILED:
+            case RfidUhfConstants.SC_ERR_READ_FAILED:
                 return "SC_ERR_READ_FAILED";
-            case RFIDUHFConstants.SC_ERR_WRITE_FAILED:
+            case RfidUhfConstants.SC_ERR_WRITE_FAILED:
                 return "SC_ERR_WRITE_FAILED";
-            case RFIDUHFConstants.SC_ERR_LOCK_FAILED:
+            case RfidUhfConstants.SC_ERR_LOCK_FAILED:
                 return "SC_ERR_LOCK_FAILED";
-            case RFIDUHFConstants.SC_ERR_ERASE_FAILED:
+            case RfidUhfConstants.SC_ERR_ERASE_FAILED:
                 return "SC_ERR_ERASE_FAILED";
-            case RFIDUHFConstants.SC_ERR_CMD_ERR:
+            case RfidUhfConstants.SC_ERR_CMD_ERR:
                 return "SC_ERR_CMD_ERR";
-            case RFIDUHFConstants.SC_ERR_UNDEFINED:
+            case RfidUhfConstants.SC_ERR_UNDEFINED:
                 return "SC_ERR_UNDEFINED";
             default:
                 return "UNKNOWN";
