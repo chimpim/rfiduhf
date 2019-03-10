@@ -18,6 +18,8 @@ public abstract class AbstractRfidUhfReader implements RfidUhfReader {
     private OutputStream mOutputStream;
     private final int readResponseInterval;
     private final int readResponseCount;
+    private final Object wLock = new Object();
+    private final Object rLock = new Object();
 
     public AbstractRfidUhfReader(
             @NotNull RfidUhfReaderConnAdapter adapter,
@@ -47,22 +49,26 @@ public abstract class AbstractRfidUhfReader implements RfidUhfReader {
     }
 
     protected void write(@NotNull byte[] cmd) throws IOException {
-        writeAndFlush(cmd);
+        synchronized (wLock) {
+            writeAndFlush(cmd);
+        }
     }
 
     @Nullable
     protected byte[] readResponse() throws IOException {
-        return readResponse(readResponseInterval, readResponseCount);
+        synchronized (rLock) {
+            return readResponse(readResponseInterval, readResponseCount);
+        }
     }
 
-    private synchronized void writeAndFlush(@NotNull byte[] cmd) throws IOException {
+    private void writeAndFlush(@NotNull byte[] cmd) throws IOException {
         if (mOutputStream == null) throw new IOException("mOutputStream == null");
         mOutputStream.write(cmd);
         mOutputStream.flush();
     }
 
     @Nullable
-    private synchronized byte[] readResponse(final int interval, final int count) throws IOException {
+    private byte[] readResponse(final int interval, final int count) throws IOException {
         if (mInputStream == null) throw new IOException("mInputStream == null");
         int counter = 0;
         int available = mInputStream.available();

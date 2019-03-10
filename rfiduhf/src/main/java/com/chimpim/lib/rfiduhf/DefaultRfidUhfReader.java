@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-class DefaultRfidUhfReader extends AbstractRfidUhfReader implements RfidUhfReader {
+public class DefaultRfidUhfReader extends AbstractRfidUhfReader implements RfidUhfReader {
 
     private static final UhfTag[] EMPTY_UHF_TAG = new UhfTag[0];
 
@@ -20,7 +20,7 @@ class DefaultRfidUhfReader extends AbstractRfidUhfReader implements RfidUhfReade
     private final byte mReaderAddr;
     private final RFIDUHFProtocol mProtocol;
 
-    DefaultRfidUhfReader(@NotNull RfidUhfReaderBuilder builder) {
+    public DefaultRfidUhfReader(@NotNull RfidUhfReaderBuilder builder) {
         super(builder.adapter, builder.readResponseInterval, builder.readResponseCount);
         mReaderAddr = builder.readerAddress;
         mProtocol = builder.protocol;
