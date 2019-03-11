@@ -18,8 +18,6 @@ public abstract class AbstractRfidUhfReader implements RfidUhfReader {
     private OutputStream mOutputStream;
     private final int readResponseInterval;
     private final int readResponseCount;
-    private final Object wLock = new Object();
-    private final Object rLock = new Object();
 
     public AbstractRfidUhfReader(
             @NotNull RfidUhfReaderConnAdapter adapter,
@@ -49,16 +47,12 @@ public abstract class AbstractRfidUhfReader implements RfidUhfReader {
     }
 
     protected void write(@NotNull byte[] cmd) throws IOException {
-        synchronized (wLock) {
-            writeAndFlush(cmd);
-        }
+        writeAndFlush(cmd);
     }
 
     @Nullable
     protected byte[] readResponse() throws IOException {
-        synchronized (rLock) {
-            return readResponse(readResponseInterval, readResponseCount);
-        }
+        return readResponse(readResponseInterval, readResponseCount);
     }
 
     private void writeAndFlush(@NotNull byte[] cmd) throws IOException {
