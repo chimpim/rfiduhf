@@ -7,8 +7,8 @@ import org.jetbrains.annotations.NotNull;
 public class RfidUhfReaderBuilder {
     RfidUhfReaderConnAdapter adapter;
     byte readerAddress = RfidUhfConstants.ADDRESS_COMMUNAL;
-    int readResponseInterval = 10;
-    int readResponseCount = 50;
+    int readResponseInterval = 40;
+    int readResponseCount = 25;
     RFIDUHFProtocol protocol;
     Logger logger;
 

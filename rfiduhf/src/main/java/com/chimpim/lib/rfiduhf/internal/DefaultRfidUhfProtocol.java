@@ -634,7 +634,7 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
         // 0x0B address 0x0B 0x00 antenna data(8byte) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[8];
-        System.arraycopy(resp, 5, bytes, 0, bytes.length);
+        copyBytes(resp, resp, 5, bytes, bytes.length);
         return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], bytes));
     }
 
@@ -681,7 +681,7 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
             return newResult(resp, null);
         }
         byte[] data = new byte[dataLen];
-        System.arraycopy(resp, 5, data, 0, data.length);
+        copyBytes(resp, resp, 5, data, data.length);
         return newResult(resp, new UhfTag(UhfTag.TYPE_ISO_6B, resp[4], data));
     }
 
@@ -727,7 +727,7 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
             return newResult(resp, null);
         }
         byte[] data = new byte[dataLen];
-        System.arraycopy(resp, 5, data, 0, data.length);
+        copyBytes(resp, resp, 5, data, data.length);
         return newResult(resp, new UhfTag(UhfTag.TYPE_GEN2_6C, resp[4], data));
     }
 
@@ -745,11 +745,11 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
         int n = (resp[2] - 3) / 14;
         UhfTag[] uhfTags = new UhfTag[resp[4]];
         byte[] data = new byte[14 * n];
-        System.arraycopy(resp, 5, data, 0, data.length);
+        copyBytes(resp, resp, 5, data, data.length);
         for (int i = 0; i < uhfTags.length; i++) {
             byte[] bytes = new byte[14];
-            System.arraycopy(data, i * 14, bytes, 0, 14);
-            uhfTags[i] = newUhfTagOf14bytes(bytes);
+            copyBytes(resp, data, i * 14, bytes, 14);
+            uhfTags[i] = newUhfTagOf14bytes(resp, bytes);
         }
         return new Result<>(resp[3], resp[1], uhfTags);
     }
@@ -760,8 +760,8 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
         // 0x0B address 17 0x00 data(14) cc
         checkBasicResp(resp);
         byte[] bytes = new byte[14];
-        System.arraycopy(resp, 0, bytes, 0, 14);
-        UhfTag uhfTag = newUhfTagOf14bytes(bytes);
+        copyBytes(resp, resp, 0, bytes, 14);
+        UhfTag uhfTag = newUhfTagOf14bytes(resp, bytes);
         return new Result<>(resp[3], resp[1], uhfTag);
     }
 
@@ -835,14 +835,22 @@ public class DefaultRfidUhfProtocol implements RFIDUHFProtocol {
         return (byte) (0xFF & (~sum + 1));
     }
 
-    private static UhfTag newUhfTagOf14bytes(@NotNull byte[] bytes) {
+    private static UhfTag newUhfTagOf14bytes(byte[] resp, @NotNull byte[] bytes) throws RespException {
         byte[] data = new byte[12];
-        System.arraycopy(bytes, 2, data, 0, 12);
+        copyBytes(resp, bytes, 2, data, 12);
         return new UhfTag(bytes[0], bytes[1], data);
     }
 
     private static <T> Result<T> newResult(byte[] resp, T payload) {
         return new Result<>(resp[3], resp[1], payload);
+    }
+
+    private static void copyBytes(byte[] resp, byte[] src, int srcPos, byte[] dest, int length) throws RespException {
+        try {
+            System.arraycopy(src, srcPos, dest, 0, length);
+        } catch (IndexOutOfBoundsException e) {
+            throw new RespLenException(resp, "响应数据长度错误。");
+        }
     }
 
 }
